@@ -15,7 +15,6 @@ public class ExamenPsicoController : Controller
     {
         _context = context;
     }
-
     [HttpGet]
     public IActionResult Iniciar()
     {
@@ -92,24 +91,54 @@ public class ExamenPsicoController : Controller
 
         for (int i = 0; i < listaPreguntas.Count; i++)
         {
-            var respuestaEntidad = new RespuestaPsicometrico
+            var respuestaEntidad = new RespuestaExamen
             {
                 UsuarioId = usuario.UsuarioId,  // ✔️ Este es int, como en la base de datos
                 PreguntaId = listaPreguntas[i].PreguntaId,
-                ValorRespuesta = respuestasUsuario[i]
+                Valor = respuestasUsuario[i] ?? 0
             };
             _context.RespuestasPsicometrico.Add(respuestaEntidad);
         }
 
-        _context.SaveChanges();
-        HttpContext.Session.Remove(SessionKeyPreguntas);
-        HttpContext.Session.Remove(SessionKeyRespuestas);
+    // Calcular el puntaje total
+    int total = respuestasUsuario.Where(r => r.HasValue).Sum(r => r.Value);
+    string diagnostico;
 
-        return RedirectToAction(nameof(ExamenCompletado));
-    }
+    if (total <= 21)
+        diagnostico = "Ansiedad muy baja";
+    else if (total <= 35)
+        diagnostico = "Ansiedad moderada";
+    else
+        diagnostico = "Ansiedad severa";
+
+    // Guardar resultado final
+    var resultado = new ResultadoExamen
+    {
+        UsuarioId = usuario.UsuarioId,
+        PuntajeTotal = total,
+        Diagnostico = diagnostico
+    };
+    _context.ResultadosExamen.Add(resultado);
+
+    _context.SaveChanges();
+
+    // Pasar el resultado a la vista
+    TempData["Puntaje"] = total;
+    TempData["Diagnostico"] = diagnostico;
+
+    HttpContext.Session.Remove(SessionKeyPreguntas);
+    HttpContext.Session.Remove(SessionKeyRespuestas);
+
+    return RedirectToAction(nameof(ExamenCompletado));
+}
 
     [HttpGet]
     public IActionResult ExamenCompletado()
+    {
+        return View();
+    }
+
+    public IActionResult examenPsico()
     {
         return View();
     }

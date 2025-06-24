@@ -4697,19 +4697,19 @@
     ]
   },
   "packageFolders": {
-    "/home/codespace/.nuget/packages/": {}
+    "C:\\Users\\mlore\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/workspaces/PortalPsicologia/PortalPsicologia.csproj",
+      "projectUniqueName": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia\\PortalPsicologia.csproj",
       "projectName": "PortalPsicologia",
-      "projectPath": "/workspaces/PortalPsicologia/PortalPsicologia.csproj",
-      "packagesPath": "/home/codespace/.nuget/packages/",
-      "outputPath": "/workspaces/PortalPsicologia/obj/",
+      "projectPath": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia\\PortalPsicologia.csproj",
+      "packagesPath": "C:\\Users\\mlore\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/codespace/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\mlore\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -4732,7 +4732,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -4768,7 +4769,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.410/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
