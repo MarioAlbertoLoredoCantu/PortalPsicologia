@@ -1,0 +1,66 @@
+@model PortalPsicologia.Models.Usuario
+
+@{
+ViewData["Title"] = "Registrar Usuario";
+}
+
+<h2>Registrar Usuario</h2> <form asp-action="RegisterUser" method="post"> @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div class="form-group">
+    <label asp-for="Nombre" class="control-label"></label>
+    <input asp-for="Nombre" class="form-control" />
+    <span asp-validation-for="Nombre" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Correo" class="control-label"></label>
+    <input asp-for="Correo" class="form-control" />
+    <span asp-validation-for="Correo" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Matricula" class="control-label"></label>
+    <input asp-for="Matricula" class="form-control" />
+    <span asp-validation-for="Matricula" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Rol" class="control-label"></label>
+    <select asp-for="Rol" class="form-control">
+        <option value="">-- Selecciona un rol --</option>
+        <option value="Estudiante">Estudiante</option>
+        <option value="Docente">Docente</option>
+        <option value="Administrador">Administrador</option>
+    </select>
+    <span asp-validation-for="Rol" class="text-danger"></span>
+</div>
+
+<button type="submit" class="btn btn-primary">Registrar</button>
+
+</form>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successMessage" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            const msg = $("#successMessage");
+            if (msg.length) {
+                // Desaparece automáticamente después de 5 segundos
+                setTimeout(function () {
+                    msg.alert('close');
+                }, 5000);
+
+                // Limpia el formulario
+                $("#userForm")[0].reset();
+            }
+        });
+    </script>
+}

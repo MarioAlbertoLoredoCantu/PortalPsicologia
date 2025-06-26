@@ -1,0 +1,37 @@
+
+@model IEnumerable<PortalPsicologia.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Lista de Usuarios";
+}
+
+<h2>Lista de Usuarios</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Matrícula</th>
+            <th>Rol</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (Model != null && Model.Any())
+    {
+        foreach (var usuario in Model)
+        {
+            <tr>
+                <td>@usuario.Nombre</td>
+                <td>@usuario.Correo</td>
+                <td>@usuario.Matricula</td>
+                <td>@usuario.Rol</td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td colspan="4" class="text-center">No hay usuarios registrados.</td></tr>
+    }
+    </tbody>
+</table>

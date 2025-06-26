@@ -1,0 +1,35 @@
+@model List<PortalPsicologia.Models.ResultadoDetalleViewModel>
+
+@{
+    ViewData["Title"] = "Resultados de Exámenes";
+}
+
+<h2>Resultados de Exámenes</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Matrícula</th>
+            <th>Puntaje</th>
+            <th>Diagnóstico</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.ResultadoId</td>
+                <td>@r.Nombre</td>
+                <td>@r.Correo</td>
+                <td>@r.Matricula</td>
+                <td>@r.PuntajeTotal</td>
+                <td>@r.Diagnostico</td>
+                <td>@r.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>
