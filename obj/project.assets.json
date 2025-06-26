@@ -5615,11 +5615,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia\\PortalPsicologia.csproj",
+      "projectUniqueName": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia-1\\PortalPsicologia.csproj",
       "projectName": "PortalPsicologia",
-      "projectPath": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia\\PortalPsicologia.csproj",
+      "projectPath": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia-1\\PortalPsicologia.csproj",
       "packagesPath": "C:\\Users\\mlore\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia\\obj\\",
+      "outputPath": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia-1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mlore\\AppData\\Roaming\\NuGet\\NuGet.Config"

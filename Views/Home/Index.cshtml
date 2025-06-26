@@ -1,8 +1,25 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using Microsoft.AspNetCore.Authentication.Google
+
+@{
+    ViewData["Title"] = "Login";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Bienvenido al Portal Psicológico</h2>
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <a class="btn btn-primary" href="/login/google">Iniciar sesión con Google</a>
+
+
+}
+else
+{
+    <p>Hola, @User.Identity.Name</p>
+    <form method="post" action="/login/logout">
+        <button type="submit" class="btn btn-danger">Cerrar sesión</button>
+    </form>
+}
+
+

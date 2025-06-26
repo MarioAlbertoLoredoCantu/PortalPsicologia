@@ -1,16 +1,40 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using PortalPsicologia.Data;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// ✅ Agrega esta línea para habilitar sesiones
+// ✅ Habilitar sesiones
 builder.Services.AddSession();
 
+builder.Services.Configure<CookieTempDataProviderOptions>(options =>
+{
+    options.Cookie.IsEssential = true;
+});
+
+// ✅ Conexión a la base de datos
 builder.Services.AddDbContext<PsicometricoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PsicometricoContext")));
+
+// ✅ Autenticación con Google
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+})
+.AddCookie()
+.AddGoogle(options =>
+{
+    IConfigurationSection googleAuthNSection = builder.Configuration.GetSection("Authentication:Google");
+    options.ClientId = googleAuthNSection["ClientId"];
+    options.ClientSecret = googleAuthNSection["ClientSecret"];
+});
+
 
 var app = builder.Build();
 
@@ -26,9 +50,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// ✅ Agrega esta línea para usar sesiones
+// ✅ Middleware de sesión
 app.UseSession();
 
+// ✅ Middleware de autenticación (debe ir ANTES que authorization)
+app.UseAuthentication();
+
+// ✅ Middleware de autorización
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -36,4 +64,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
 

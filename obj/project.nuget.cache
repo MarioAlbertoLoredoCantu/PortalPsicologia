@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Lg5V8swrQSg=",
+  "dgSpecHash": "kLmGtYI5jpo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia\\PortalPsicologia.csproj",
+  "projectFilePath": "C:\\Users\\mlore\\PortalPsicologia\\PortalPsicologia-1\\PortalPsicologia.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mlore\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\mlore\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
