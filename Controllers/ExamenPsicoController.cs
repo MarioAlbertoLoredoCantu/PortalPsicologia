@@ -9,6 +9,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using PortalPsicologia.Models.ViewModels;
 
 public class ExamenPsicoController : Controller
 {

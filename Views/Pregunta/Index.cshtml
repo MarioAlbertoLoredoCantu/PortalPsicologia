@@ -1,0 +1,64 @@
+@model PortalPsicologia.Models.ViewModels.PreguntaViewModel
+
+@{
+    ViewData["Title"] = "Gestión de Preguntas";
+}
+
+<h2>Gestión de Preguntas</h2>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">@TempData["Mensaje"]</div>
+}
+
+<!-- Formulario para Agregar o Editar Pregunta -->
+<form asp-action="GuardarPregunta" asp-controller="Pregunta" method="post">
+    <input type="hidden" asp-for="Pregunta.PreguntaId" />
+    <div class="form-group">
+        <label asp-for="Pregunta.Texto">Texto de la Pregunta</label>
+        <input asp-for="Pregunta.Texto" class="form-control" />
+        <span asp-validation-for="Pregunta.Texto" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success mt-2">
+        @(Model.Pregunta.PreguntaId == 0 ? "Agregar Pregunta" : "Actualizar Pregunta")
+    </button>
+</form>
+
+<!-- Tabla de Preguntas -->
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Texto</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.ListaPreguntas)
+        {
+            <tr>
+                <td>@p.PreguntaId</td>
+                <td>@p.Texto</td>
+                <td>
+                    @(p.Activa ? "Activa" : "Inactiva")
+                </td>
+                <td>
+                    <a asp-action="Index" asp-route-id="@p.PreguntaId" class="btn btn-primary btn-sm">Editar</a>
+                    @if (p.Activa)
+                    {
+                        <a asp-action="Desactivar" asp-route-id="@p.PreguntaId" class="btn btn-warning btn-sm">Desactivar</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Activar" asp-route-id="@p.PreguntaId" class="btn btn-success btn-sm">Activar</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

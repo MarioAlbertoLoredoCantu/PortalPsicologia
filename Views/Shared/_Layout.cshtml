@@ -54,6 +54,13 @@
                                 <a class="nav-link text-dark" asp-controller="Usuario" asp-action="ListaResultados">Resultados</a>
                             </li>
                         }
+                        @if (rol == "Administrador")
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Pregunta" asp-action="Index">Administrar Preguntas</a>
+        </li>
+    }
+</ul>
                     </ul>
                 </div>
             </div>
