@@ -8,6 +8,7 @@ public class UsuarioController : Controller
     public UsuarioController(PsicometricoContext context)
     {
         _context = context;
+
     }
 
     [HttpGet]
@@ -109,5 +110,97 @@ public class UsuarioController : Controller
                           }).ToList();
 
         return View(resultados);
+    }
+
+    public IActionResult ListaUsuariosParaEliminar()
+    {
+        var rol = HttpContext.Session.GetString("UsuarioRol");
+        if (rol != "Administrador")
+            return RedirectToAction("NoAutorizado", "Home");
+        var usuarios = _context.Usuarios.ToList();
+        return View(usuarios);
+    }
+
+    [HttpPost]
+    public IActionResult EliminarUsuario(int id)
+    {
+        var rol = HttpContext.Session.GetString("UsuarioRol");
+        if (rol != "Administrador")
+            return RedirectToAction("NoAutorizado", "Home");
+        var usuario = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == id);
+        if (usuario != null)
+        {
+            _context.Usuarios.Remove(usuario);
+            _context.SaveChanges();
+        }
+        return RedirectToAction("ListaUsuariosParaEliminar");
+    }
+
+    [HttpGet]
+    public IActionResult EditarUsuario(int id)
+    {
+        if (HttpContext.Session.GetString("UsuarioRol") != "Administrador")
+        {
+            return RedirectToAction("NoAutorizado", "Home");
+        }
+        var usuario = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == id);
+        if (usuario == null)
+        {
+            TempData["ErrorMessage"] = "Usuario no encontrado.";
+            return RedirectToAction("ListaUsuarios");
+        }
+
+        return View(usuario);
+    }
+
+    [HttpPost]
+    public IActionResult EditarUsuario(Usuario usuario)
+    {
+        if (HttpContext.Session.GetString("UsuarioRol") != "Administrador")
+            return RedirectToAction("NoAutorizado", "Home");
+        // Verifica si el usuario existe
+        var usuarioExistente = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == usuario.UsuarioId);
+        if (usuarioExistente == null)
+        {
+            TempData["ErrorMessage"] = "Usuario no encontrado.";
+            return RedirectToAction("ListaUsuarios");
+        }
+
+        // Validar duplicados (excepto el mismo ID)
+        bool correoDuplicado = _context.Usuarios.Any(u => u.Correo == usuario.Correo && u.UsuarioId != usuario.UsuarioId);
+        bool matriculaDuplicada = _context.Usuarios.Any(u => u.Matricula == usuario.Matricula && u.UsuarioId != usuario.UsuarioId);
+
+        if (correoDuplicado)
+            ModelState.AddModelError("Correo", "Este correo ya está registrado.");
+        if (matriculaDuplicada)
+            ModelState.AddModelError("Matricula", "Esta matrícula ya está registrada.");
+
+        if (!ModelState.IsValid)
+            return View(usuario);
+
+        // Actualiza campos
+        usuarioExistente.Nombre = usuario.Nombre;
+        usuarioExistente.Correo = usuario.Correo;
+        usuarioExistente.Matricula = usuario.Matricula;
+        usuarioExistente.Rol = usuario.Rol;
+
+        _context.SaveChanges();
+
+        TempData["SuccessMessage"] = "Usuario actualizado correctamente.";
+        return View(usuarioExistente); // Regresa a la misma vista con datos actualizados
+    }
+
+    [HttpGet]
+    public IActionResult VerificarMatriculaUnica(string matricula, int UsuarioId)
+    {
+        var existe = _context.Usuarios.Any(u => u.Matricula == matricula && u.UsuarioId != UsuarioId);
+        return Json(!existe);
+    }
+
+    [HttpGet]
+    public IActionResult VerificarCorreoUnico(string correo, int UsuarioId)
+    {
+        var existe = _context.Usuarios.Any(u => u.Correo == correo && u.UsuarioId != UsuarioId);
+        return Json(!existe);
     }
 }

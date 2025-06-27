@@ -35,6 +35,18 @@
                         @{
                         var rol = Context.Session.GetString("UsuarioRol");
                         }
+                        @if (Context.Session.GetString("UsuarioRol") == "Administrador" || Context.Session.GetString("UsuarioRol") == "Docente")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="ListaResultados">Resultados</a>
+                            </li>
+                        }
+                        @if (rol == "Administrador")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Pregunta" asp-action="Index">Administrar Preguntas</a>
+                            </li>
+                        }
 
                         @if (rol == "Administrador")
                         {
@@ -45,22 +57,15 @@
                         @if (Context.Session.GetString("UsuarioRol") == "Administrador" || Context.Session.GetString("UsuarioRol") == "Docente")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="ListaUsuarios">Usuarios Registrados</a>
+                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="ListaUsuarios">Lista de Usuarios</a>
                             </li>
                         }
-                        @if (Context.Session.GetString("UsuarioRol") == "Administrador" || Context.Session.GetString("UsuarioRol") == "Docente")
+                        @if (Context.Session.GetString("UsuarioRol") == "Administrador")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="ListaResultados">Resultados</a>
+                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="ListaUsuariosParaEliminar">Eliminar Usuarios</a>
                             </li>
                         }
-                        @if (rol == "Administrador")
-    {
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Pregunta" asp-action="Index">Administrar Preguntas</a>
-        </li>
-    }
-</ul>
                     </ul>
                 </div>
             </div>

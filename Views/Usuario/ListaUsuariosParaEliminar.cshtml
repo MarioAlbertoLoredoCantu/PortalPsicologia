@@ -1,0 +1,50 @@
+@model List<PortalPsicologia.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Eliminar Usuarios";
+}
+
+<h2>Eliminar Usuarios</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Matrícula</th>
+            <th>Rol</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.UsuarioId</td>
+                <td>@u.Nombre</td>
+                <td>@u.Correo</td>
+                <td>@u.Matricula</td>
+                <td>@u.Rol</td>
+                <td>
+                    @if (Context.Session.GetInt32("UsuarioId") != u.UsuarioId)
+                    {
+                        <form asp-action="EliminarUsuario" asp-controller="Usuario" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@u.UsuarioId" />
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="text-muted">No puedes eliminarte a ti mismo</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

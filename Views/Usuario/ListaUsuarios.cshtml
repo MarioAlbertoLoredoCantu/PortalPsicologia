@@ -1,4 +1,3 @@
-
 @model IEnumerable<PortalPsicologia.Models.Usuario>
 
 @{
@@ -7,6 +6,15 @@
 
 <h2>Lista de Usuarios</h2>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -14,6 +22,10 @@
             <th>Correo</th>
             <th>Matrícula</th>
             <th>Rol</th>
+            @if (Context.Session.GetString("UsuarioRol") == "Administrador")
+            {
+                <th>Acciones</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -26,12 +38,18 @@
                 <td>@usuario.Correo</td>
                 <td>@usuario.Matricula</td>
                 <td>@usuario.Rol</td>
+                @if (Context.Session.GetString("UsuarioRol") == "Administrador")
+                {
+                    <td>
+                        <a asp-action="EditarUsuario" asp-route-id="@usuario.UsuarioId" class="btn btn-warning btn-sm">Editar</a>
+                    </td>
+                }
             </tr>
         }
     }
     else
     {
-        <tr><td colspan="4" class="text-center">No hay usuarios registrados.</td></tr>
+        <tr><td colspan="5" class="text-center">No hay usuarios registrados.</td></tr>
     }
     </tbody>
 </table>
