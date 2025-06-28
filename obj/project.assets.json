@@ -5610,19 +5610,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\PC\\.nuget\\packages\\": {}
+    "C:\\Users\\mlore\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\Downloads\\PortalPsicologia\\PortalPsicologia.csproj",
+      "projectUniqueName": "C:\\Users\\mlore\\PortalPsicologia-1\\PortalPsicologia.csproj",
       "projectName": "PortalPsicologia",
-      "projectPath": "C:\\Users\\PC\\Downloads\\PortalPsicologia\\PortalPsicologia.csproj",
-      "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\Downloads\\PortalPsicologia\\obj\\",
+      "projectPath": "C:\\Users\\mlore\\PortalPsicologia-1\\PortalPsicologia.csproj",
+      "packagesPath": "C:\\Users\\mlore\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mlore\\PortalPsicologia-1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\mlore\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -5682,24 +5682,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.17, 8.0.17]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[8.0.17, 8.0.17]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[8.0.17, 8.0.17]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[8.0.17, 8.0.17]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"

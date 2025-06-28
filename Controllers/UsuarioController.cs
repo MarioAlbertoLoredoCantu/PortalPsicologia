@@ -8,7 +8,6 @@ public class UsuarioController : Controller
     public UsuarioController(PsicometricoContext context)
     {
         _context = context;
-
     }
 
     [HttpGet]
@@ -29,13 +28,13 @@ public class UsuarioController : Controller
     [HttpPost]
     public IActionResult RegisterUser(Usuario usuario)
     {
-        // Validación: matrícula existente
+        Console.WriteLine("¡Se ejecutó el POST!");
+
         if (_context.Usuarios.Any(u => u.Matricula == usuario.Matricula))
         {
             ModelState.AddModelError("Matricula", "Esta matrícula ya está registrada.");
         }
 
-        // Validación: correo existente
         if (_context.Usuarios.Any(u => u.Correo == usuario.Correo))
         {
             ModelState.AddModelError("Correo", "Este correo ya está registrado.");
@@ -47,23 +46,19 @@ public class UsuarioController : Controller
             _context.SaveChanges();
 
             TempData["SuccessMessage"] = "El usuario ha sido registrado exitosamente.";
-
-            // Redireccionar al mismo formulario limpio
             return RedirectToAction(nameof(RegisterUser));
         }
 
-        // Si hay errores, regresar con datos actuales
         return View(usuario);
     }
 
     public IActionResult ListaUsuarios()
     {
-        TempData["RolDetectado"] = HttpContext.Session.GetString("UsuarioRol");
-
         var rol = HttpContext.Session.GetString("UsuarioRol");
+        TempData["RolDetectado"] = rol;
+
         if (rol != "Administrador" && rol != "Docente")
         {
-            TempData["RolDetectado"] = rol ?? "NULO";
             return RedirectToAction("NoAutorizado", "Home");
         }
 
@@ -71,19 +66,19 @@ public class UsuarioController : Controller
         return View(usuarios);
     }
 
-    // AJAX: Validación en tiempo real (correo único)
-    [AcceptVerbs("Get", "Post")]
-    public IActionResult VerificarCorreoUnico(string correo)
+    // ✅ Validación remota única para correo
+    [HttpGet]
+    public IActionResult VerificarCorreoUnico(string correo, int UsuarioId = 0)
     {
-        bool existe = _context.Usuarios.Any(u => u.Correo == correo);
+        var existe = _context.Usuarios.Any(u => u.Correo == correo && u.UsuarioId != UsuarioId);
         return Json(!existe);
     }
 
-    // AJAX: Validación en tiempo real (matrícula única)
-    [AcceptVerbs("Get", "Post")]
-    public IActionResult VerificarMatriculaUnica(string matricula)
+    // ✅ Validación remota única para matrícula
+    [HttpGet]
+    public IActionResult VerificarMatriculaUnica(string matricula, int UsuarioId = 0)
     {
-        bool existe = _context.Usuarios.Any(u => u.Matricula == matricula);
+        var existe = _context.Usuarios.Any(u => u.Matricula == matricula && u.UsuarioId != UsuarioId);
         return Json(!existe);
     }
 
@@ -117,6 +112,7 @@ public class UsuarioController : Controller
         var rol = HttpContext.Session.GetString("UsuarioRol");
         if (rol != "Administrador")
             return RedirectToAction("NoAutorizado", "Home");
+
         var usuarios = _context.Usuarios.ToList();
         return View(usuarios);
     }
@@ -127,6 +123,7 @@ public class UsuarioController : Controller
         var rol = HttpContext.Session.GetString("UsuarioRol");
         if (rol != "Administrador")
             return RedirectToAction("NoAutorizado", "Home");
+
         var usuario = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == id);
         if (usuario != null)
         {
@@ -143,6 +140,7 @@ public class UsuarioController : Controller
         {
             return RedirectToAction("NoAutorizado", "Home");
         }
+
         var usuario = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == id);
         if (usuario == null)
         {
@@ -158,7 +156,7 @@ public class UsuarioController : Controller
     {
         if (HttpContext.Session.GetString("UsuarioRol") != "Administrador")
             return RedirectToAction("NoAutorizado", "Home");
-        // Verifica si el usuario existe
+
         var usuarioExistente = _context.Usuarios.FirstOrDefault(u => u.UsuarioId == usuario.UsuarioId);
         if (usuarioExistente == null)
         {
@@ -166,7 +164,6 @@ public class UsuarioController : Controller
             return RedirectToAction("ListaUsuarios");
         }
 
-        // Validar duplicados (excepto el mismo ID)
         bool correoDuplicado = _context.Usuarios.Any(u => u.Correo == usuario.Correo && u.UsuarioId != usuario.UsuarioId);
         bool matriculaDuplicada = _context.Usuarios.Any(u => u.Matricula == usuario.Matricula && u.UsuarioId != usuario.UsuarioId);
 
@@ -178,7 +175,6 @@ public class UsuarioController : Controller
         if (!ModelState.IsValid)
             return View(usuario);
 
-        // Actualiza campos
         usuarioExistente.Nombre = usuario.Nombre;
         usuarioExistente.Correo = usuario.Correo;
         usuarioExistente.Matricula = usuario.Matricula;
@@ -187,20 +183,6 @@ public class UsuarioController : Controller
         _context.SaveChanges();
 
         TempData["SuccessMessage"] = "Usuario actualizado correctamente.";
-        return View(usuarioExistente); // Regresa a la misma vista con datos actualizados
-    }
-
-    [HttpGet]
-    public IActionResult VerificarMatriculaUnica(string matricula, int UsuarioId)
-    {
-        var existe = _context.Usuarios.Any(u => u.Matricula == matricula && u.UsuarioId != UsuarioId);
-        return Json(!existe);
-    }
-
-    [HttpGet]
-    public IActionResult VerificarCorreoUnico(string correo, int UsuarioId)
-    {
-        var existe = _context.Usuarios.Any(u => u.Correo == correo && u.UsuarioId != UsuarioId);
-        return Json(!existe);
+        return View(usuarioExistente);
     }
 }

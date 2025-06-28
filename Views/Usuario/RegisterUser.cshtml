@@ -1,42 +1,45 @@
 @model PortalPsicologia.Models.Usuario
 
 @{
-ViewData["Title"] = "Registrar Usuario";
+    ViewData["Title"] = "Registrar Usuario";
 }
 
-<h2>Registrar Usuario</h2> <form asp-action="RegisterUser" method="post"> @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<h2>Registrar Usuario</h2>
 
-<div class="form-group">
-    <label asp-for="Nombre" class="control-label"></label>
-    <input asp-for="Nombre" class="form-control" />
-    <span asp-validation-for="Nombre" class="text-danger"></span>
-</div>
+<form id="userForm" asp-action="RegisterUser" method="post" onsubmit="alert('Enviando...')">
 
-<div class="form-group">
-    <label asp-for="Correo" class="control-label"></label>
-    <input asp-for="Correo" class="form-control" />
-    <span asp-validation-for="Correo" class="text-danger"></span>
-</div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-<div class="form-group">
-    <label asp-for="Matricula" class="control-label"></label>
-    <input asp-for="Matricula" class="form-control" />
-    <span asp-validation-for="Matricula" class="text-danger"></span>
-</div>
+    <div class="form-group">
+        <label asp-for="Nombre" class="control-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
 
-<div class="form-group">
-    <label asp-for="Rol" class="control-label"></label>
-    <select asp-for="Rol" class="form-control">
-        <option value="">-- Selecciona un rol --</option>
-        <option value="Estudiante">Estudiante</option>
-        <option value="Docente">Docente</option>
-        <option value="Administrador">Administrador</option>
-    </select>
-    <span asp-validation-for="Rol" class="text-danger"></span>
-</div>
+    <div class="form-group">
+        <label asp-for="Correo" class="control-label"></label>
+        <input asp-for="Correo" class="form-control" />
+        <span asp-validation-for="Correo" class="text-danger"></span>
+    </div>
 
-<button type="submit" class="btn btn-primary">Registrar</button>
+    <div class="form-group">
+        <label asp-for="Matricula" class="control-label"></label>
+        <input asp-for="Matricula" class="form-control" />
+        <span asp-validation-for="Matricula" class="text-danger"></span>
+    </div>
 
+    <div class="form-group">
+        <label asp-for="Rol" class="control-label"></label>
+        <select asp-for="Rol" class="form-control">
+            <option value="">-- Selecciona un rol --</option>
+            <option value="Estudiante">Estudiante</option>
+            <option value="Docente">Docente</option>
+            <option value="Administrador">Administrador</option>
+        </select>
+        <span asp-validation-for="Rol" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Registrar</button>
 </form>
 
 @if (TempData["SuccessMessage"] != null)
