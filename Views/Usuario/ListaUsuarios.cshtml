@@ -15,8 +15,9 @@
     <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
 }
 
-<table class="table table-bordered">
-    <thead>
+<!-- ✅ Agrega un ID a la tabla -->
+<table id="tablaUsuarios" class="table table-bordered table-striped">
+    <thead class="table-dark">
         <tr>
             <th>Nombre</th>
             <th>Correo</th>
@@ -53,3 +54,24 @@
     }
     </tbody>
 </table>
+
+@section Styles {
+    <!-- ✅ Estilos de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+}
+
+@section Scripts {
+    <!-- ✅ Scripts necesarios para DataTables -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tablaUsuarios').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+}
