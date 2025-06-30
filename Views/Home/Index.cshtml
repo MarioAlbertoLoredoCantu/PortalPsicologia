@@ -145,6 +145,10 @@
                 <a href="/">Inicio</a>
                 <a href="#">Carreras</a>
                 <a href="#">Contacto</a>
+                 @if (rol == "Administrador" || rol == "Docente" || rol == "Estudiante")
+                {
+                    <a href="/Home/Manual">Manual De Ayuda</a>
+                }
 
                 @if (rol == "Administrador" || rol == "Docente" || rol == "Estudiante")
                 {
