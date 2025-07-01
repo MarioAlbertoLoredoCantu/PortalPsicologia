@@ -25,26 +25,21 @@
 </form>
 
 <!-- Tabla de Preguntas -->
-<table class="table table-bordered table-striped mt-4">
+<table class="table table-bordered table-striped">
     <thead class="table-dark">
         <tr>
-            <th class="col-numero">#</th>
+            <th># Pregunta</th> <!-- Aquí cambia el encabezado -->
             <th>Texto</th>
             <th>Estado</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @{
-            int numeroEnExamen = 1; // ✅ Ahora empieza desde 1
-        }
-
-        @foreach (var p in Model.ListaPreguntas)
+        @for (int i = 0; i < Model.ListaPreguntas.Count; i++)
         {
+            var p = Model.ListaPreguntas[i];
             <tr>
-                <td class="col-numero">
-                    @(p.Activa ? numeroEnExamen.ToString() : "-")
-                </td>
+                <td>@i</td> <!-- Número de pregunta en el orden del examen -->
                 <td>@p.Texto</td>
                 <td>@(p.Activa ? "Activa" : "Inactiva")</td>
                 <td>
@@ -59,22 +54,9 @@
                     }
                 </td>
             </tr>
-
-            if (p.Activa)
-            {
-                numeroEnExamen++; // Solo se incrementa si está activa
-            }
         }
     </tbody>
 </table>
-
-<!-- Estilo para columna angosta -->
-<style>
-    .col-numero {
-        width: 60px;
-        text-align: center;
-    }
-</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

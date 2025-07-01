@@ -28,7 +28,7 @@
 <table class="table table-bordered table-striped mt-4">
     <thead class="table-dark">
         <tr>
-            <th class="col-numero">#</th>
+            <th># Pregunta (en el examen)</th>
             <th>Texto</th>
             <th>Estado</th>
             <th>Acciones</th>
@@ -36,13 +36,13 @@
     </thead>
     <tbody>
         @{
-            int numeroEnExamen = 1; // ✅ Ahora empieza desde 1
+            int numeroEnExamen = 0;
         }
 
         @foreach (var p in Model.ListaPreguntas)
         {
             <tr>
-                <td class="col-numero">
+                <td>
                     @(p.Activa ? numeroEnExamen.ToString() : "-")
                 </td>
                 <td>@p.Texto</td>
@@ -62,19 +62,11 @@
 
             if (p.Activa)
             {
-                numeroEnExamen++; // Solo se incrementa si está activa
+                numeroEnExamen++;
             }
         }
     </tbody>
 </table>
-
-<!-- Estilo para columna angosta -->
-<style>
-    .col-numero {
-        width: 60px;
-        text-align: center;
-    }
-</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

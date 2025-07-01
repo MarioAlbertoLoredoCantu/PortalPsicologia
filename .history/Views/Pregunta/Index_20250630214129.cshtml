@@ -36,7 +36,7 @@
     </thead>
     <tbody>
         @{
-            int numeroEnExamen = 1; // ✅ Ahora empieza desde 1
+            int numeroEnExamen = 0;
         }
 
         @foreach (var p in Model.ListaPreguntas)
@@ -62,7 +62,7 @@
 
             if (p.Activa)
             {
-                numeroEnExamen++; // Solo se incrementa si está activa
+                numeroEnExamen++;
             }
         }
     </tbody>

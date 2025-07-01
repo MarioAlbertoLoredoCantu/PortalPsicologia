@@ -25,28 +25,24 @@
 </form>
 
 <!-- Tabla de Preguntas -->
-<table class="table table-bordered table-striped mt-4">
+<table class="table table-bordered table-striped">
     <thead class="table-dark">
         <tr>
-            <th class="col-numero">#</th>
+            <th>ID</th>
             <th>Texto</th>
             <th>Estado</th>
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @{
-            int numeroEnExamen = 1; // ✅ Ahora empieza desde 1
-        }
-
         @foreach (var p in Model.ListaPreguntas)
         {
             <tr>
-                <td class="col-numero">
-                    @(p.Activa ? numeroEnExamen.ToString() : "-")
-                </td>
+                <td>@p.PreguntaId</td>
                 <td>@p.Texto</td>
-                <td>@(p.Activa ? "Activa" : "Inactiva")</td>
+                <td>
+                    @(p.Activa ? "Activa" : "Inactiva")
+                </td>
                 <td>
                     <a asp-action="Index" asp-route-id="@p.PreguntaId" class="btn btn-primary btn-sm">Editar</a>
                     @if (p.Activa)
@@ -59,22 +55,9 @@
                     }
                 </td>
             </tr>
-
-            if (p.Activa)
-            {
-                numeroEnExamen++; // Solo se incrementa si está activa
-            }
         }
     </tbody>
 </table>
-
-<!-- Estilo para columna angosta -->
-<style>
-    .col-numero {
-        width: 60px;
-        text-align: center;
-    }
-</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -1,3 +1,3 @@
 ﻿<Project>
-  <Import Project="../buildMultiTargeting/PortalPsicologia.props" />
+  <Import Project="..\buildMultiTargeting\PortalPsicologia.props" />
 </Project>
