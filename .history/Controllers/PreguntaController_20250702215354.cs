@@ -58,13 +58,7 @@ public class PreguntaController : Controller
             modelo.Pregunta.Activa = true;
 
             // ✅ Código actualizado para definir correctamente el orden:
-           int ultimoOrden = _context.Preguntas
-    .Where(p => p.Activa)
-    .Select(p => p.Orden)
-    .ToList() // Fuerza evaluación en memoria
-    .DefaultIfEmpty(0)
-    .Max();
-
+            int ultimoOrden = _context.Preguntas.Where(p => p.Activa).Select(p => p.Orden).DefaultIfEmpty(0).Max();
             modelo.Pregunta.Orden = ultimoOrden + 1;
 
             _context.Preguntas.Add(modelo.Pregunta);
@@ -122,13 +116,8 @@ public class PreguntaController : Controller
         }
 
         // Asignar orden al activar
- int nuevoOrden = _context.Preguntas
-        .Where(p => p.Activa)
-        .Select(p => p.Orden)
-        .ToList()
-        .DefaultIfEmpty(0)
-        .Max();
-                pregunta.Activa = true;
+        int nuevoOrden = _context.Preguntas.Where(p => p.Activa).Select(p => p.Orden).DefaultIfEmpty(0).Max() + 1;
+        pregunta.Activa = true;
         pregunta.Orden = nuevoOrden;
 
         _context.SaveChanges();
@@ -158,47 +147,27 @@ public IActionResult Subir(int id)
     return RedirectToAction("Index");
 }
 
-    [HttpPost]
-    public IActionResult Bajar(int id)
-    {
-        var pregunta = _context.Preguntas.FirstOrDefault(p => p.PreguntaId == id);
-        if (pregunta == null || !pregunta.Activa) return NotFound();
-
-        var siguiente = _context.Preguntas
-            .Where(p => p.Orden > pregunta.Orden && p.Activa)
-            .OrderBy(p => p.Orden)
-            .FirstOrDefault();
-
-        if (siguiente != null)
-        {
-            int temp = pregunta.Orden;
-            pregunta.Orden = siguiente.Orden;
-            siguiente.Orden = temp;
-
-            _context.SaveChanges();
-        }
-
-        return RedirectToAction("Index");
-    }
-[HttpGet]
-public IActionResult InicializarOrden()
+[HttpPost]
+public IActionResult Bajar(int id)
 {
-    var preguntasActivas = _context.Preguntas
-        .Where(p => p.Activa)
-        .OrderBy(p => p.PreguntaId) // O por texto si prefieres
-        .ToList();
+    var pregunta = _context.Preguntas.FirstOrDefault(p => p.PreguntaId == id);
+    if (pregunta == null || !pregunta.Activa) return NotFound();
 
-    int orden = 1;
-    foreach (var p in preguntasActivas)
+    var siguiente = _context.Preguntas
+        .Where(p => p.Orden > pregunta.Orden && p.Activa)
+        .OrderBy(p => p.Orden)
+        .FirstOrDefault();
+
+    if (siguiente != null)
     {
-        p.Orden = orden++;
+        int temp = pregunta.Orden;
+        pregunta.Orden = siguiente.Orden;
+        siguiente.Orden = temp;
+
+        _context.SaveChanges();
     }
 
-    _context.SaveChanges();
-
-    TempData["Mensaje"] = "Orden asignado correctamente a preguntas activas.";
     return RedirectToAction("Index");
 }
-
 
 }

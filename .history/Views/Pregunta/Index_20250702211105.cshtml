@@ -28,10 +28,10 @@
 <table class="table table-bordered table-striped mt-4">
     <thead class="table-dark">
         <tr>
-            <th style="width: 60px; text-align: center;">#</th>
+            <th style="width: 80px; text-align: center;">#</th>
             <th>Texto</th>
             <th>Estado</th>
-            <th style="width: 200px;">Acciones</th>
+            <th style="width: 180px;">Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -49,12 +49,8 @@
                     @if (p.Activa)
                     {
                         <a asp-action="Desactivar" asp-route-id="@p.PreguntaId" class="btn btn-warning btn-sm">Desactivar</a>
-                        <form asp-action="Subir" asp-route-id="@p.PreguntaId" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-secondary btn-sm">↑</button>
-                        </form>
-                        <form asp-action="Bajar" asp-route-id="@p.PreguntaId" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-secondary btn-sm">↓</button>
-                        </form>
+                        <a asp-action="SubirOrden" asp-route-id="@p.PreguntaId" class="btn btn-secondary btn-sm">↑</a>
+                        <a asp-action="BajarOrden" asp-route-id="@p.PreguntaId" class="btn btn-secondary btn-sm">↓</a>
                     }
                     else
                     {

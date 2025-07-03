@@ -58,13 +58,7 @@ public class PreguntaController : Controller
             modelo.Pregunta.Activa = true;
 
             // ✅ Código actualizado para definir correctamente el orden:
-           int ultimoOrden = _context.Preguntas
-    .Where(p => p.Activa)
-    .Select(p => p.Orden)
-    .ToList() // Fuerza evaluación en memoria
-    .DefaultIfEmpty(0)
-    .Max();
-
+            int ultimoOrden = _context.Preguntas.Where(p => p.Activa).Select(p => p.Orden).DefaultIfEmpty(0).Max();
             modelo.Pregunta.Orden = ultimoOrden + 1;
 
             _context.Preguntas.Add(modelo.Pregunta);
@@ -122,13 +116,8 @@ public class PreguntaController : Controller
         }
 
         // Asignar orden al activar
- int nuevoOrden = _context.Preguntas
-        .Where(p => p.Activa)
-        .Select(p => p.Orden)
-        .ToList()
-        .DefaultIfEmpty(0)
-        .Max();
-                pregunta.Activa = true;
+        int nuevoOrden = _context.Preguntas.Where(p => p.Activa).Select(p => p.Orden).DefaultIfEmpty(0).Max() + 1;
+        pregunta.Activa = true;
         pregunta.Orden = nuevoOrden;
 
         _context.SaveChanges();
@@ -136,27 +125,27 @@ public class PreguntaController : Controller
     }
 
     [HttpPost]
-public IActionResult Subir(int id)
-{
-    var pregunta = _context.Preguntas.FirstOrDefault(p => p.PreguntaId == id);
-    if (pregunta == null || !pregunta.Activa) return NotFound();
-
-    var anterior = _context.Preguntas
-        .Where(p => p.Orden < pregunta.Orden && p.Activa)
-        .OrderByDescending(p => p.Orden)
-        .FirstOrDefault();
-
-    if (anterior != null)
+    public IActionResult Subir(int id)
     {
-        int temp = pregunta.Orden;
-        pregunta.Orden = anterior.Orden;
-        anterior.Orden = temp;
+        var pregunta = _context.Preguntas.FirstOrDefault(p => p.PreguntaId == id);
+        if (pregunta == null || !pregunta.Activa) return NotFound();
 
-        _context.SaveChanges();
+        var anterior = _context.Preguntas
+            .Where(p => p.Orden < pregunta.Orden && p.Activa)
+            .OrderByDescending(p => p.Orden)
+            .FirstOrDefault();
+
+        if (anterior != null)
+        {
+            int temp = pregunta.Orden;
+            pregunta.Orden = anterior.Orden;
+            anterior.Orden = temp;
+
+            _context.SaveChanges();
+        }
+
+        return RedirectToAction("Index");
     }
-
-    return RedirectToAction("Index");
-}
 
     [HttpPost]
     public IActionResult Bajar(int id)
@@ -180,25 +169,4 @@ public IActionResult Subir(int id)
 
         return RedirectToAction("Index");
     }
-[HttpGet]
-public IActionResult InicializarOrden()
-{
-    var preguntasActivas = _context.Preguntas
-        .Where(p => p.Activa)
-        .OrderBy(p => p.PreguntaId) // O por texto si prefieres
-        .ToList();
-
-    int orden = 1;
-    foreach (var p in preguntasActivas)
-    {
-        p.Orden = orden++;
-    }
-
-    _context.SaveChanges();
-
-    TempData["Mensaje"] = "Orden asignado correctamente a preguntas activas.";
-    return RedirectToAction("Index");
-}
-
-
 }
