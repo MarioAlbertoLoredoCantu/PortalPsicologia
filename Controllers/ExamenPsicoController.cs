@@ -7,6 +7,7 @@ using PortalPsicologia.Data;
 using PortalPsicologia.Models;
 using PortalPsicologia.Extensions;
 using PortalPsicologia.Models.ViewModels;
+using System.Linq;
 
 public class ExamenPsicoController : Controller
 {
@@ -19,13 +20,17 @@ public class ExamenPsicoController : Controller
         _context = context;
     }
 
-    [HttpGet]
+ [HttpGet]
 public IActionResult Iniciar()
 {
-    // ⚠️ Solo traer preguntas activas
+    // ✅ Siempre limpiar las sesiones para que se reinicie
+    HttpContext.Session.Remove(SessionKeyPreguntas);
+    HttpContext.Session.Remove(SessionKeyRespuestas);
+
+    // ✅ Volver a cargar las preguntas ordenadas según la base de datos
     var listaPreguntas = _context.Preguntas
-        .Where(p => p.Activa) // Filtra preguntas activas
-        .OrderBy(p => p.PreguntaId)
+        .Where(p => p.Activa)
+        .OrderBy(p => p.Orden)
         .ToList();
 
     if (listaPreguntas == null || listaPreguntas.Count == 0)
@@ -38,6 +43,8 @@ public IActionResult Iniciar()
 
     return RedirectToAction(nameof(ExamenPsico), new { indice = 0 });
 }
+
+
 
     [HttpGet]
     public IActionResult ExamenPsico(int indice)
@@ -137,6 +144,4 @@ public IActionResult Iniciar()
     {
         return View();
     }
-
-
 }

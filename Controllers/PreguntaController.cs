@@ -58,14 +58,15 @@ public class PreguntaController : Controller
             modelo.Pregunta.Activa = true;
 
             // ✅ Código actualizado para definir correctamente el orden:
-           int ultimoOrden = _context.Preguntas
-    .Where(p => p.Activa)
-    .Select(p => p.Orden)
-    .ToList() // Fuerza evaluación en memoria
-    .DefaultIfEmpty(0)
-    .Max();
+          int siguienteOrden = _context.Preguntas
+        .Where(p => p.Activa)
+        .Select(p => p.Orden)
+        .ToList()
+        .DefaultIfEmpty(0)
+        .Max() + 1;
 
-            modelo.Pregunta.Orden = ultimoOrden + 1;
+modelo.Pregunta.Orden = siguienteOrden;
+
 
             _context.Preguntas.Add(modelo.Pregunta);
             TempData["Mensaje"] = "Pregunta agregada correctamente.";
@@ -122,14 +123,15 @@ public class PreguntaController : Controller
         }
 
         // Asignar orden al activar
- int nuevoOrden = _context.Preguntas
-        .Where(p => p.Activa)
-        .Select(p => p.Orden)
-        .ToList()
-        .DefaultIfEmpty(0)
-        .Max();
-                pregunta.Activa = true;
-        pregunta.Orden = nuevoOrden;
+ int siguienteOrden = _context.Preguntas
+    .Where(p => p.Activa)
+    .Select(p => p.Orden)
+    .ToList()
+    .DefaultIfEmpty(0)
+    .Max() + 1;
+pregunta.Activa = true;
+pregunta.Orden = siguienteOrden;
+
 
         _context.SaveChanges();
         return RedirectToAction("Index");

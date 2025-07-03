@@ -152,7 +152,7 @@
 
                 @if (rol == "Administrador" || rol == "Docente" || rol == "Estudiante")
                 {
-                    <a href="/ExamenPsico/examenPsico">Examen</a>
+                    <a href="/ExamenPsico/Iniciar">Examen</a>
                 }
 
                 @if (rol == "Administrador" || rol == "Docente")
@@ -184,10 +184,14 @@
             }
             else
             {
-                <p>Hola, @User.Identity.Name</p>
-                <form method="post" action="/login/logout">
-                    <button type="submit" class="btn-cerrar">Cerrar sesión</button>
-                </form>
+                 <p>Hola, @User.Identity.Name</p>
+
+    <!-- ✅ BOTÓN PARA INICIAR EL EXAMEN -->
+    <a href="/ExamenPsico/Iniciar" class="btn-iniciar">Iniciar Examen</a>
+
+    <form method="post" action="/login/logout" style="margin-top: 20px;">
+        <button type="submit" class="btn-cerrar">Cerrar sesión</button>
+    </form>
             }
         </div>
     </div>

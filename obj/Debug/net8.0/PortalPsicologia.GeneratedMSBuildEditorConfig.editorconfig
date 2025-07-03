@@ -17,79 +17,81 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = PortalPsicologia
 build_property.RootNamespace = PortalPsicologia
-build_property.ProjectDir = C:\Users\Manyra Cantú\PortalPsicologia\
+build_property.ProjectDir = C:\Users\mlore\PortalPsicologia-3\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Manyra Cantú\PortalPsicologia
+build_property.MSBuildProjectDirectory = C:\Users\mlore\PortalPsicologia-3
 build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/ExamenPsico/ExamenCompletado.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/ExamenPsico/ExamenCompletado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhhbWVuUHNpY29cRXhhbWVuQ29tcGxldGFkby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/ExamenPsico/examenPsico.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/ExamenPsico/examenPsico.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhhbWVuUHNpY29cZXhhbWVuUHNpY28uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Home/Index.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Home/Manual.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Home/Manual.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNYW51YWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Home/NoAutorizado.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Home/NoAutorizado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxOb0F1dG9yaXphZG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Home/Privacy.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Pregunta/Index.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Pregunta/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlZ3VudGFcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Shared/Error.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Usuario/EditarUsuario.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Usuario/EditarUsuario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xFZGl0YXJVc3VhcmlvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Usuario/ListaResultados.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Usuario/ListaResultados.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xMaXN0YVJlc3VsdGFkb3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Usuario/ListaUsuarios.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Usuario/ListaUsuarios.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xMaXN0YVVzdWFyaW9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Usuario/ListaUsuariosParaEliminar.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Usuario/ListaUsuariosParaEliminar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xMaXN0YVVzdWFyaW9zUGFyYUVsaW1pbmFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Usuario/RegisterUser.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Usuario/RegisterUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xSZWdpc3RlclVzZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/_ViewImports.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/_ViewStart.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Manyra Cantú/PortalPsicologia/Views/Shared/_Layout.cshtml]
+[C:/Users/mlore/PortalPsicologia-3/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-sk0l6hlll2
