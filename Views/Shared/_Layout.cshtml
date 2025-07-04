@@ -117,13 +117,17 @@
                 </div>
 
                 <!-- CENTRO -->
-                <div class="navbar-section">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="ExamenPsico" asp-action="Iniciar">Examen</a>
-                        </li>
-                    </ul>
-                </div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="navbar-section">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="ExamenPsico" asp-action="Iniciar">Examen</a>
+            </li>
+        </ul>
+    </div>
+}
+
 
                 <!-- DERECHA -->
                 <div class="navbar-section">
@@ -165,11 +169,7 @@
     </main>
 </div>
 
-<footer class="border-top footer text-muted mt-4">
-    <div class="container">
-        &copy; 2025 - PortalPsicologia
-    </div>
-</footer>
+
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
