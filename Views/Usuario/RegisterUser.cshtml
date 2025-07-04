@@ -4,51 +4,104 @@
     ViewData["Title"] = "Registrar Usuario";
 }
 
-<h2>Registrar Usuario</h2>
+<style>
+    .registro-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #fff;
+        border: 2px solid #b80000;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
 
-<form id="userForm" asp-action="RegisterUser" method="post" onsubmit="alert('Enviando...')">
+    .registro-container h2 {
+        text-align: center;
+        color: #b80000;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    .form-control {
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 1rem;
+    }
 
-    <div class="form-group">
-        <label asp-for="Nombre" class="control-label"></label>
-        <input asp-for="Nombre" class="form-control" />
-        <span asp-validation-for="Nombre" class="text-danger"></span>
-    </div>
+    label {
+        font-weight: 600;
+        margin-top: 10px;
+    }
 
-    <div class="form-group">
-        <label asp-for="Correo" class="control-label"></label>
-        <input asp-for="Correo" class="form-control" />
-        <span asp-validation-for="Correo" class="text-danger"></span>
-    </div>
+    .btn-registrar {
+        background-color: #b80000;
+        color: white;
+        padding: 12px 30px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
 
-    <div class="form-group">
-        <label asp-for="Matricula" class="control-label"></label>
-        <input asp-for="Matricula" class="form-control" />
-        <span asp-validation-for="Matricula" class="text-danger"></span>
-    </div>
+    .btn-registrar:hover {
+        background-color: #930000;
+    }
 
-    <div class="form-group">
-        <label asp-for="Rol" class="control-label"></label>
-        <select asp-for="Rol" class="form-control">
-            <option value="">-- Selecciona un rol --</option>
-            <option value="Estudiante">Estudiante</option>
-            <option value="Docente">Docente</option>
-            <option value="Administrador">Administrador</option>
-        </select>
-        <span asp-validation-for="Rol" class="text-danger"></span>
-    </div>
+    .alert-success {
+        text-align: center;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+</style>
 
-    <button type="submit" class="btn btn-primary">Registrar</button>
-</form>
+<div class="registro-container">
+    <h2>Registrar Usuario</h2>
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div id="successMessage" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-        @TempData["SuccessMessage"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-    </div>
-}
+    <form id="userForm" asp-action="RegisterUser" method="post">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label asp-for="Nombre" class="control-label"></label>
+            <input asp-for="Nombre" class="form-control" maxlength="100" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Correo" class="control-label"></label>
+            <input asp-for="Correo" class="form-control" type="email" maxlength="100" />
+            <span asp-validation-for="Correo" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Matricula" class="control-label"></label>
+            <input asp-for="Matricula" class="form-control" maxlength="5" pattern="[0-9]*" inputmode="numeric" />
+            <span asp-validation-for="Matricula" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Rol" class="control-label"></label>
+            <select asp-for="Rol" class="form-control">
+                <option value="">-- Selecciona un rol --</option>
+                <option value="Estudiante">Estudiante</option>
+                <option value="Docente">Docente</option>
+                <option value="Administrador">Administrador</option>
+            </select>
+            <span asp-validation-for="Rol" class="text-danger"></span>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-registrar">Registrar</button>
+        </div>
+    </form>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div id="successMessage" class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+    }
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
@@ -56,12 +109,10 @@
         $(document).ready(function () {
             const msg = $("#successMessage");
             if (msg.length) {
-                // Desaparece automáticamente después de 5 segundos
                 setTimeout(function () {
                     msg.alert('close');
                 }, 5000);
 
-                // Limpia el formulario
                 $("#userForm")[0].reset();
             }
         });

@@ -4,53 +4,148 @@
     ViewData["Title"] = "Resultados de Exámenes";
 }
 
-<h2>Resultados de Exámenes</h2>
+<style>
+    .resultados-container {
+        max-width: 95%;
+        margin: 40px auto;
+        padding: 20px 30px;
+        background: #fff;
+        border: 2px solid #b80000;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
 
-<!-- ✅ Agregamos ID a la tabla para usar DataTables -->
-<table id="tablaResultados" class="table table-bordered table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Matrícula</th>
-            <th>Puntaje</th>
-            <th>Diagnóstico</th>
-            <th>Fecha</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var r in Model)
-        {
+    .resultados-container h2 {
+        color: #b80000;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+    }
+
+    #tablaResultados {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    #tablaResultados_wrapper .dataTables_filter input,
+    #tablaResultados_wrapper .dataTables_length select {
+        border-radius: 6px;
+        padding: 4px;
+    }
+
+    table.dataTable thead th {
+        background-color: #b80000 !important;
+        color: white;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    table.dataTable tbody td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    table.dataTable {
+        border-radius: 10px !important;
+        overflow: hidden;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        border-radius: 6px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background-color: #b80000 !important;
+        color: white !important;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background-color: #930000 !important;
+        color: white !important;
+    }
+</style>
+
+<div class="resultados-container">
+    <h2>Resultados de Exámenes</h2>
+
+    <!-- 🔎 Filtro por fecha -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <label for="fechaDesde">Desde:</label>
+            <input type="date" id="fechaDesde" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label for="fechaHasta">Hasta:</label>
+            <input type="date" id="fechaHasta" class="form-control" />
+        </div>
+    </div>
+
+    <!-- ✅ Tabla -->
+    <table id="tablaResultados" class="table table-bordered table-striped">
+        <thead>
             <tr>
-                <td>@r.ResultadoId</td>
-                <td>@r.Nombre</td>
-                <td>@r.Correo</td>
-                <td>@r.Matricula</td>
-                <td>@r.PuntajeTotal</td>
-                <td>@r.Diagnostico</td>
-                <td>@r.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Matrícula</th>
+                <th>Puntaje</th>
+                <th>Diagnóstico</th>
+                <th>Fecha</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td>@r.ResultadoId</td>
+                    <td>@r.Nombre</td>
+                    <td>@r.Correo</td>
+                    <td>@r.Matricula</td>
+                    <td>@r.PuntajeTotal</td>
+                    <td>@r.Diagnostico</td>
+                    <td>@r.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Styles {
-    <!-- ✅ CSS de DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
 }
 
 @section Scripts {
-    <!-- ✅ jQuery y DataTables -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            $('#tablaResultados').DataTable({
+            var table = $('#tablaResultados').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
                 }
+            });
+
+            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                var fechaDesde = $('#fechaDesde').val();
+                var fechaHasta = $('#fechaHasta').val();
+                var fechaTabla = data[6];
+
+                if (!fechaDesde && !fechaHasta) return true;
+
+                var partes = fechaTabla.split(" ")[0].split("/");
+                var fechaFormateada = `${partes[2]}-${partes[1]}-${partes[0]}`;
+
+                return (!fechaDesde || fechaFormateada >= fechaDesde) &&
+                    (!fechaHasta || fechaFormateada <= fechaHasta);
+            });
+
+            $('#fechaDesde, #fechaHasta').on('change', function () {
+                table.draw();
             });
         });
     </script>

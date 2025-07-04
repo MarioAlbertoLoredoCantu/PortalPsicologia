@@ -11,87 +11,170 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PortalPsicologia.styles.css" asp-append-version="true" />
+    <style>
+        .navbar-custom {
+            background-color: #b80000;
+            border-bottom: 4px solid #007bff;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        .navbar-nav .nav-link,
+        .nav-item .dropdown-toggle {
+            color: white !important;
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .navbar-nav .nav-link,
+.nav-item .dropdown-toggle {
+    color: white !important;
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: all 0.4s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover,
+.nav-item .dropdown-toggle:hover {
+    background-color: #d3d3d3 !important;
+    color: black !important;
+}
+
+
+        .dropdown-menu {
+            background-color: #003d80;
+            border-radius: 8px !important;
+        }
+
+        .dropdown-menu .dropdown-item {
+            color: white !important;
+            text-align: center;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #3366cc !important;
+            color: white !important;
+            border-radius: 8px;
+        }
+
+        .navbar-content {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-section {
+            display: flex;
+            align-items: center;
+        }
+    </style>
     @RenderSection("Styles", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PortalPsicologia</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-    <a class="nav-link" asp-controller="Home" asp-action="Manual">Manual de Ayuda</a>
-</li>
+@{
+    var rol = Context.Session.GetString("UsuarioRol");
+}
 
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="/img/LogoUN.png" alt="Logo UN" />
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <div class="navbar-content">
+                <!-- IZQUIERDA -->
+                <div class="navbar-section">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ExamenPsico" asp-action="Iniciar">Examen</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @{
-                        var rol = Context.Session.GetString("UsuarioRol");
-                        }
-                        @if (Context.Session.GetString("UsuarioRol") == "Administrador" || Context.Session.GetString("UsuarioRol") == "Docente")
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="ListaResultados">Resultados</a>
-                            </li>
-                        }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Servicios</a>
+                            <ul class="dropdown-menu">
+                                @if (rol == "Administrador" || rol == "Docente" || rol == "Estudiante")
+                                {
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Manual">Manual de Ayuda</a></li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- CENTRO -->
+                <div class="navbar-section">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="ExamenPsico" asp-action="Iniciar">Examen</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- DERECHA -->
+                <div class="navbar-section">
+                    <ul class="navbar-nav">
                         @if (rol == "Administrador")
                         {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Pregunta" asp-action="Index">Administrar Preguntas</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Gestión de Examen</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Pregunta" asp-action="Index">Administrar Preguntas</a></li>
+                                </ul>
                             </li>
                         }
-
-                        @if (rol == "Administrador")
+                        @if (rol == "Administrador" || rol == "Docente")
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="RegisterUser"> Registrar Usuario </a>
-                            </li>
-                        }
-                        @if (Context.Session.GetString("UsuarioRol") == "Administrador" || Context.Session.GetString("UsuarioRol") == "Docente")
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="ListaUsuarios">Lista de Usuarios</a>
-                            </li>
-                        }
-                        @if (Context.Session.GetString("UsuarioRol") == "Administrador")
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Usuario" asp-action="ListaUsuariosParaEliminar">Eliminar Usuarios</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Gestión de Usuarios</a>
+                                <ul class="dropdown-menu">
+                                    @if (rol == "Administrador")
+                                    {
+                                        <li><a class="dropdown-item" asp-controller="Usuario" asp-action="RegisterUser">Registrar Usuario</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Usuario" asp-action="ListaUsuariosParaEliminar">Eliminar Usuarios</a></li>
+                                    }
+                                    <li><a class="dropdown-item" asp-controller="Usuario" asp-action="ListaUsuarios">Lista de Usuarios</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Usuario" asp-action="ListaResultados">Resultados</a></li>
+                                </ul>
                             </li>
                         }
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - PortalPsicologia - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </div>
+</nav>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="border-top footer text-muted mt-4">
+    <div class="container">
+        &copy; 2025 - PortalPsicologia
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@RenderSection("Scripts", required: false)
 </body>
 </html>
+

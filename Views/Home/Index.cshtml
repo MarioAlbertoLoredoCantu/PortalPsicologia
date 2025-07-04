@@ -3,88 +3,42 @@
 @using Microsoft.AspNetCore.Authentication.Google
 
 @{
-    Layout = null;
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Inicio";
+    Layout = "_Layout"; // Usa el layout principal
     var rol = Context.Session.GetString("UsuarioRol");
     var isLoggedIn = User.Identity.IsAuthenticated;
 }
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"]</title>
+
+@section Styles {
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body, html {
-            height: 100%;
-            font-family: Arial, sans-serif;
-        }
-
-        .hero {
+        body {
             background-image: url('/img/fondoUn1.png');
             background-size: cover;
             background-position: center;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .navbar {
-            background-color: #b80000;
             color: white;
-            padding: 10px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-shadow:  none !important;
         }
 
-        .navbar img {
-            height: 40px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-
-        .content {
-            flex: 1;
+        .inicio-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            color: white;
-            padding: 0 20px;
-            text-shadow: 2px 2px 5px black;
+            height: 80vh;
         }
 
-        .content h1 {
+        .inicio-container h1 {
             font-size: 2.8rem;
             font-weight: bold;
+            margin-bottom: 20px;
         }
 
-        .content p {
+        .inicio-container p {
             font-size: 1.2rem;
             max-width: 800px;
-            margin: 20px auto;
+            margin-bottom: 30px;
         }
 
         .btn-iniciar {
@@ -95,7 +49,7 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 30px;
+            margin-top: 20px;
             transition: background-color 0.3s ease;
             text-decoration: none;
         }
@@ -118,82 +72,27 @@
         .btn-cerrar:hover {
             background-color: #930000;
         }
-
-       (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .content h1 {
-                font-size: 2rem;
-            }
-
-            .btn-iniciar {
-                font-size: 1.2rem;
-                padding: 12px 30px;
-            }
-        }
     </style>
-</head>
-<body>
-    <div class="hero">
-        <!-- Menú superior -->
-        <div class="navbar">
-            <img src="/img/LogoUN.png" alt="Logo Universidad del Norte" />
-            <div class="nav-links">
-                <a href="/">Inicio</a>
-                <a href="#">Carreras</a>
-                <a href="#">Contacto</a>
-                 @if (rol == "Administrador" || rol == "Docente" || rol == "Estudiante")
-                {
-                    <a href="/Home/Manual">Manual De Ayuda</a>
-                }
+}
 
-                @if (rol == "Administrador" || rol == "Docente" || rol == "Estudiante")
-                {
-                    <a href="/ExamenPsico/Iniciar">Examen</a>
-                }
+<div class="inicio-container">
+    <h1>Bienvenido al Examen Psicométrico de la<br> Universidad del Norte</h1>
+    <p>
+        La Universidad del Norte ofrece un proceso que guía a los estudiantes en la elección de una carrera o profesión que se ajuste a sus intereses, habilidades, valores y personalidad.
+        Se enfoca en ayudar a tomar decisiones informadas y a lograr una mayor satisfacción en el ámbito profesional.
+    </p>
 
-                @if (rol == "Administrador" || rol == "Docente")
-                {
-                    <a href="/Usuario/ListaResultados">Resultados</a>
-                    <a href="/Usuario/ListaUsuarios">Lista de Usuarios</a>
-                }
+    @if (!isLoggedIn)
+    {
+        <a class="btn-iniciar" href="/login/google">Iniciar sesión</a>
+    }
+    else
+    {
+        <p>Hola, @User.Identity.Name</p>
+        <a href="/ExamenPsico/Iniciar" class="btn-iniciar">Iniciar Examen</a>
 
-                @if (rol == "Administrador")
-                {
-                    <a href="/Pregunta/Index">Administrar Preguntas</a>
-                    <a href="/Usuario/RegisterUser">Registrar Usuario</a>
-                    <a href="/Usuario/ListaUsuariosParaEliminar">Eliminar Usuarios</a>
-                }
-            </div>
-        </div>
-
-        <!-- Contenido principal -->
-        <div class="content">
-            <h1>Bienvenido al Examen Psicométrico de la<br> Universidad del Norte</h1>
-            <p>
-                La Universidad del Norte ofrece un proceso que guía a los estudiantes en la elección de una carrera o profesión que se ajuste a sus intereses, habilidades, valores y personalidad.
-                Se enfoca en ayudar a tomar decisiones informadas y a lograr una mayor satisfacción en el ámbito profesional.
-            </p>
-
-            @if (!isLoggedIn)
-            {
-                <a class="btn-iniciar" href="/login/google">Iniciar sesión</a>
-            }
-            else
-            {
-                 <p>Hola, @User.Identity.Name</p>
-
-    <!-- ✅ BOTÓN PARA INICIAR EL EXAMEN -->
-    <a href="/ExamenPsico/Iniciar" class="btn-iniciar">Iniciar Examen</a>
-
-    <form method="post" action="/login/logout" style="margin-top: 20px;">
-        <button type="submit" class="btn-cerrar">Cerrar sesión</button>
-    </form>
-            }
-        </div>
-    </div>
-</body>
-</html>
+        <form method="post" action="/login/logout" style="margin-top: 20px;">
+            <button type="submit" class="btn-cerrar">Cerrar sesión</button>
+        </form>
+    }
+</div>

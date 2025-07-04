@@ -4,64 +4,108 @@
     ViewData["Title"] = "Lista de Usuarios";
 }
 
-<h2>Lista de Usuarios</h2>
+<style>
+    .tabla-container {
+        margin-top: 30px;
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 14px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+        border: 2px solid #b80000;
+    }
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
+    .tabla-container h2 {
+        color: #b80000;
+        font-weight: bold;
+        margin-bottom: 25px;
+    }
 
-<!-- ✅ Agrega un ID a la tabla -->
-<table id="tablaUsuarios" class="table table-bordered table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Matrícula</th>
-            <th>Rol</th>
-            @if (Context.Session.GetString("UsuarioRol") == "Administrador")
-            {
-                <th>Acciones</th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-    @if (Model != null && Model.Any())
+    .table {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+
+    .btn-editar {
+        background-color: #ffc107;
+        color: black;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 12px;
+    }
+
+    .btn-editar:hover {
+        background-color: #e0a800;
+    }
+
+    .alert {
+        border-radius: 10px;
+        font-size: 1rem;
+        text-align: center;
+    }
+</style>
+
+<div class="tabla-container">
+    <h2>Lista de Usuarios</h2>
+
+    @if (TempData["SuccessMessage"] != null)
     {
-        foreach (var usuario in Model)
-        {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <table id="tablaUsuarios" class="table table-bordered table-striped">
+        <thead class="table-dark">
             <tr>
-                <td>@usuario.Nombre</td>
-                <td>@usuario.Correo</td>
-                <td>@usuario.Matricula</td>
-                <td>@usuario.Rol</td>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Matrícula</th>
+                <th>Rol</th>
                 @if (Context.Session.GetString("UsuarioRol") == "Administrador")
                 {
-                    <td>
-                        <a asp-action="EditarUsuario" asp-route-id="@usuario.UsuarioId" class="btn btn-warning btn-sm">Editar</a>
-                    </td>
+                    <th>Acciones</th>
                 }
             </tr>
-        }
-    }
-    else
-    {
-        <tr><td colspan="5" class="text-center">No hay usuarios registrados.</td></tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var usuario in Model)
+                {
+                    <tr>
+                        <td>@usuario.Nombre</td>
+                        <td>@usuario.Correo</td>
+                        <td>@usuario.Matricula</td>
+                        <td>@usuario.Rol</td>
+                        @if (Context.Session.GetString("UsuarioRol") == "Administrador")
+                        {
+                            <td>
+                                <a asp-action="EditarUsuario" asp-route-id="@usuario.UsuarioId" class="btn btn-editar btn-sm">Editar</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="5" class="text-center">No hay usuarios registrados.</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Styles {
-    <!-- ✅ Estilos de DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
 }
 
 @section Scripts {
-    <!-- ✅ Scripts necesarios para DataTables -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 

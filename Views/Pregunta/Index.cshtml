@@ -4,71 +4,154 @@
     ViewData["Title"] = "Gestión de Preguntas";
 }
 
-<h2>Gestión de Preguntas</h2>
-
-@if (TempData["Mensaje"] != null)
-{
-    <div class="alert alert-success">@TempData["Mensaje"]</div>
+<style>
+    .contenedor-preguntas {
+        max-width: 1000px;
+        margin: 30px auto;
+        background: #fff;
+        border: 2px solid #b80000;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 0px 0px rgba(1, 179, 16, 0.699);
 }
 
-<!-- Formulario para Agregar o Editar Pregunta -->
-<form asp-action="GuardarPregunta" asp-controller="Pregunta" method="post">
-    <input type="hidden" asp-for="Pregunta.PreguntaId" />
-    <div class="form-group">
-        <label asp-for="Pregunta.Texto">Texto de la Pregunta</label>
-        <input asp-for="Pregunta.Texto" class="form-control" />
-        <span asp-validation-for="Pregunta.Texto" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-success mt-2">
-        @(Model.Pregunta.PreguntaId == 0 ? "Agregar Pregunta" : "Actualizar Pregunta")
-    </button>
-</form>
+    }
 
-<!-- Tabla de Preguntas -->
-<table class="table table-bordered table-striped mt-4">
-    <thead class="table-dark">
-        <tr>
-            <th style="width: 60px; text-align: center;">#</th>
-            <th>Texto</th>
-            <th style="width: 100px;">Estado</th>
-            <th style="width: 320px;">Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var p in Model.ListaPreguntas
-            .OrderByDescending(p => p.Activa)
-            .ThenBy(p => p.Orden))
-        {
+    .contenedor-preguntas h2 {
+        color: #b80000;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .form-group label {
+        font-weight: 600;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-radius: 8px;
+        padding: 8px 16px;
+    }
+
+    .tabla-preguntas {
+        margin-top: 30px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .tabla-preguntas th {
+        background-color: #b80000;
+        color: white;
+        text-align: center;
+    }
+
+    .tabla-preguntas td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .tabla-preguntas td:nth-child(2) {
+        text-align: left;
+    }
+
+    .btn-sm {
+        border-radius: 6px;
+        margin-right: 5px;
+    }
+
+    .estado-activa {
+        color: green;
+        font-weight: bold;
+    }
+
+    .estado-inactiva {
+        color: gray;
+        font-style: italic;
+    }
+</style>
+
+<div class="contenedor-preguntas">
+    <h2>Gestión de Preguntas</h2>
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-success text-center">@TempData["Mensaje"]</div>
+    }
+
+    <!-- Formulario -->
+    <form asp-action="GuardarPregunta" asp-controller="Pregunta" method="post">
+        <input type="hidden" asp-for="Pregunta.PreguntaId" />
+        <div class="form-group">
+            <label asp-for="Pregunta.Texto">Texto de la Pregunta</label>
+            <input asp-for="Pregunta.Texto" class="form-control" maxlength="400" />
+            <span asp-validation-for="Pregunta.Texto" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">
+            @(Model.Pregunta.PreguntaId == 0 ? "Agregar Pregunta" : "Actualizar Pregunta")
+        </button>
+    </form>
+
+    <!-- Tabla -->
+    <table class="table table-bordered table-striped tabla-preguntas">
+        <thead>
             <tr>
-                <td style="text-align: center;">
-                    @(p.Activa ? p.Orden.ToString() : "-")
-                </td>
-                <td>@p.Texto</td>
-                <td>@(p.Activa ? "Activa" : "Inactiva")</td>
-                <td>
-                    <a asp-action="Index" asp-route-id="@p.PreguntaId" class="btn btn-primary btn-sm">Editar</a>
-
-                    @if (p.Activa)
-                    {
-                        <a asp-action="Desactivar" asp-route-id="@p.PreguntaId" class="btn btn-warning btn-sm">Desactivar</a>
-
-                        <!-- Botones de orden en formularios separados -->
-                        <form asp-action="Subir" asp-route-id="@p.PreguntaId" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-secondary btn-sm ms-1">↑</button>
-                        </form>
-                        <form asp-action="Bajar" asp-route-id="@p.PreguntaId" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-secondary btn-sm">↓</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <a asp-action="Activar" asp-route-id="@p.PreguntaId" class="btn btn-success btn-sm">Activar</a>
-                    }
-                </td>
+                <th style="width: 60px;">#</th>
+                <th>Texto</th>
+                <th style="width: 100px;">Estado</th>
+                <th style="width: 320px;">Acciones</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.ListaPreguntas
+                .OrderByDescending(p => p.Activa)
+                .ThenBy(p => p.Orden))
+            {
+                <tr>
+                    <td>@(p.Activa ? p.Orden.ToString() : "-")</td>
+                    <td style="white-space: normal; word-break: break-word; max-width: 400px;">
+                        @p.Texto
+                    </td>
+                    <td>
+                        @if (p.Activa)
+                        {
+                            <span class="estado-activa">Activa</span>
+                        }
+                        else
+                        {
+                            <span class="estado-inactiva">Inactiva</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Index" asp-route-id="@p.PreguntaId" class="btn btn-primary btn-sm">Editar</a>
+
+                        @if (p.Activa)
+                        {
+                            <a asp-action="Desactivar" asp-route-id="@p.PreguntaId" class="btn btn-warning btn-sm">Desactivar</a>
+
+                            <form asp-action="Subir" asp-route-id="@p.PreguntaId" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-secondary btn-sm">↑</button>
+                            </form>
+                            <form asp-action="Bajar" asp-route-id="@p.PreguntaId" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-secondary btn-sm">↓</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-action="Activar" asp-route-id="@p.PreguntaId" class="btn btn-success btn-sm">Activar</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

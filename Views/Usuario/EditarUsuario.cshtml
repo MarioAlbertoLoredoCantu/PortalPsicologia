@@ -1,53 +1,62 @@
-
 @model PortalPsicologia.Models.Usuario
 
 @{
-ViewData["Title"] = "Editar Usuario";
+    ViewData["Title"] = "Editar Usuario";
 }
 
-<h2>Editar Usuario</h2>
-@if (TempData["ErrorMessage"] != null)
-{
-<div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-}
-@if (TempData["SuccessMessage"] != null)
-{
-<div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="card shadow p-4" style="max-width: 600px; width: 100%; border-radius: 15px;">
+        <h2 class="text-center mb-4">Editar Usuario</h2>
 
-<form asp-action="EditarUsuario" method="post"> <input type="hidden" asp-for="UsuarioId" />
-<div class="form-group">
-    <label asp-for="Nombre" class="control-label"></label>
-    <input asp-for="Nombre" class="form-control" />
-    <span asp-validation-for="Nombre" class="text-danger"></span>
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger text-center">@TempData["ErrorMessage"]</div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success text-center">@TempData["SuccessMessage"]</div>
+        }
+
+        <form asp-action="EditarUsuario" method="post">
+            <input type="hidden" asp-for="UsuarioId" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Nombre" class="form-label fw-bold">Nombre</label>
+                <input asp-for="Nombre" class="form-control rounded" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Correo" class="form-label fw-bold">Correo</label>
+                <input asp-for="Correo" class="form-control rounded" />
+                <span asp-validation-for="Correo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Matricula" class="form-label fw-bold">Matrícula</label>
+                <input asp-for="Matricula" class="form-control rounded" />
+                <span asp-validation-for="Matricula" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="Rol" class="form-label fw-bold">Rol</label>
+                <select asp-for="Rol" class="form-select rounded">
+                    <option value="">-- Selecciona un rol --</option>
+                    <option value="Estudiante">Estudiante</option>
+                    <option value="Docente">Docente</option>
+                    <option value="Administrador">Administrador</option>
+                </select>
+                <span asp-validation-for="Rol" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary rounded-pill px-4">Guardar Cambios</button>
+                <a asp-action="ListaUsuarios" class="btn btn-secondary rounded-pill px-4">Cancelar</a>
+            </div>
+        </form>
+    </div>
 </div>
 
-<div class="form-group">
-    <label asp-for="Correo" class="control-label"></label>
-    <input asp-for="Correo" class="form-control" />
-    <span asp-validation-for="Correo" class="text-danger"></span>
-</div>
-
-<div class="form-group">
-    <label asp-for="Matricula" class="control-label"></label>
-    <input asp-for="Matricula" class="form-control" />
-    <span asp-validation-for="Matricula" class="text-danger"></span>
-</div>
-
-<div class="form-group">
-    <label asp-for="Rol" class="control-label"></label>
-    <select asp-for="Rol" class="form-control">
-        <option value="">-- Selecciona un rol --</option>
-        <option value="Estudiante">Estudiante</option>
-        <option value="Docente">Docente</option>
-        <option value="Administrador">Administrador</option>
-    </select>
-    <span asp-validation-for="Rol" class="text-danger"></span>
-</div>
-
-<button type="submit" class="btn btn-primary">Guardar Cambios</button>
-<a asp-action="ListaUsuarios" class="btn btn-secondary">Cancelar</a>
-</form>
 @section Scripts {
-<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }
