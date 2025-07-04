@@ -5,13 +5,12 @@
 }
 
 <style>
-
-  body {
-    background-image: url('/img/fondoUn1.png'); /* cambia a tu ruta */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
+    body {
+        background-image: url('/img/fondoUn1.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
 
     .contenedor-preguntas {
         max-width: 1000px;
@@ -20,9 +19,6 @@
         border: 2px solid #b80000;
         border-radius: 12px;
         padding: 30px;
-        box-shadow: 0 0px 0px rgba(1, 179, 16, 0.699);
-}
-
     }
 
     .contenedor-preguntas h2 {
@@ -83,6 +79,11 @@
         color: gray;
         font-style: italic;
     }
+
+    tr.dragging {
+        opacity: 0.5;
+        background-color: #e0e0e0 !important;
+    }
 </style>
 
 <div class="contenedor-preguntas">
@@ -107,25 +108,21 @@
     </form>
 
     <!-- Tabla -->
-    <table class="table table-bordered table-striped tabla-preguntas">
+    <table class="table table-bordered table-striped tabla-preguntas" id="tabla-preguntas">
         <thead>
             <tr>
                 <th style="width: 60px;">#</th>
                 <th>Texto</th>
                 <th style="width: 100px;">Estado</th>
-                <th style="width: 320px;">Acciones</th>
+                <th style="width: 240px;">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var p in Model.ListaPreguntas
-                .OrderByDescending(p => p.Activa)
-                .ThenBy(p => p.Orden))
+            @foreach (var p in Model.ListaPreguntas.OrderByDescending(p => p.Activa).ThenBy(p => p.Orden))
             {
-                <tr>
+                <tr data-id="@p.PreguntaId" class="@(p.Activa ? "pregunta-activa" : "")">
                     <td>@(p.Activa ? p.Orden.ToString() : "-")</td>
-                    <td style="white-space: normal; word-break: break-word; max-width: 400px;">
-                        @p.Texto
-                    </td>
+                    <td style="white-space: normal; word-break: break-word; max-width: 400px;">@p.Texto</td>
                     <td>
                         @if (p.Activa)
                         {
@@ -142,13 +139,6 @@
                         @if (p.Activa)
                         {
                             <a asp-action="Desactivar" asp-route-id="@p.PreguntaId" class="btn btn-warning btn-sm">Desactivar</a>
-
-                            <form asp-action="Subir" asp-route-id="@p.PreguntaId" method="post" style="display:inline;">
-                                <button type="submit" class="btn btn-secondary btn-sm">↑</button>
-                            </form>
-                            <form asp-action="Bajar" asp-route-id="@p.PreguntaId" method="post" style="display:inline;">
-                                <button type="submit" class="btn btn-secondary btn-sm">↓</button>
-                            </form>
                         }
                         else
                         {
@@ -163,4 +153,62 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        let draggedRow = null;
+
+        document.querySelectorAll('.pregunta-activa').forEach(row => {
+            row.draggable = true;
+
+            row.addEventListener('dragstart', e => {
+                draggedRow = row;
+                row.classList.add('dragging');
+            });
+
+            row.addEventListener('dragend', e => {
+                row.classList.remove('dragging');
+                actualizarOrdenEnServidor();
+            });
+
+            row.addEventListener('dragover', e => {
+                e.preventDefault();
+                const afterElement = getDragAfterElement(row.parentElement, e.clientY);
+                const tableBody = row.parentElement;
+                if (afterElement == null) {
+                    tableBody.appendChild(draggedRow);
+                } else {
+                    tableBody.insertBefore(draggedRow, afterElement);
+                }
+            });
+        });
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.pregunta-activa:not(.dragging)')];
+
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+       function actualizarOrdenEnServidor() {
+    const ids = Array.from(document.querySelectorAll('.pregunta-activa')).map(row => parseInt(row.dataset.id));
+
+    fetch('/Pregunta/Reordenar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
+        },
+        body: JSON.stringify(ids)
+    }).then(() => {
+        location.reload(); // 👈 fuerza la recarga de la página
+    });
+}
+
+    </script>
 }

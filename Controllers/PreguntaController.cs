@@ -97,21 +97,36 @@ modelo.Pregunta.Orden = siguienteOrden;
     }
 
     [HttpGet]
-    public IActionResult Desactivar(int id)
+public IActionResult Desactivar(int id)
+{
+    var pregunta = _context.Preguntas.FirstOrDefault(p => p.PreguntaId == id);
+    if (pregunta == null)
     {
-        var pregunta = _context.Preguntas.FirstOrDefault(p => p.PreguntaId == id);
-        if (pregunta == null)
-        {
-            return NotFound();
-        }
-
-        pregunta.Activa = false;
-        _context.Update(pregunta);
-        _context.SaveChanges();
-
-        TempData["Mensaje"] = "La pregunta fue desactivada correctamente.";
-        return RedirectToAction("Index");
+        return NotFound();
     }
+
+    // 1. Desactiva la pregunta
+    pregunta.Activa = false;
+    _context.Update(pregunta);
+    _context.SaveChanges();
+
+    // 2. Reorganiza el orden de las preguntas activas
+    var preguntasActivas = _context.Preguntas
+        .Where(p => p.Activa)
+        .OrderBy(p => p.Orden)
+        .ToList();
+
+    for (int i = 0; i < preguntasActivas.Count; i++)
+    {
+        preguntasActivas[i].Orden = i + 1;
+    }
+
+    _context.SaveChanges();
+
+    TempData["Mensaje"] = "La pregunta fue desactivada y el orden actualizado correctamente.";
+    return RedirectToAction("Index");
+}
+
 
     [HttpGet]
     public IActionResult Activar(int id)
@@ -201,6 +216,24 @@ public IActionResult InicializarOrden()
     TempData["Mensaje"] = "Orden asignado correctamente a preguntas activas.";
     return RedirectToAction("Index");
 }
+[HttpPost]
+public IActionResult Reordenar([FromBody] List<int> nuevosIds)
+{
+    var preguntas = _context.Preguntas
+        .Where(p => nuevosIds.Contains(p.PreguntaId))
+        .ToList();
 
+    for (int i = 0; i < nuevosIds.Count; i++)
+    {
+        var pregunta = preguntas.FirstOrDefault(p => p.PreguntaId == nuevosIds[i]);
+        if (pregunta != null)
+        {
+            pregunta.Orden = i + 1;
+        }
+    }
+
+    _context.SaveChanges();
+    return Ok();
+}
 
 }
