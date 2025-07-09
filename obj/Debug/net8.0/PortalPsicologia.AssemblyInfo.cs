@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PortalPsicologia")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+173db349df35e13dd0f1fb13c8c37eee70d77942")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+31cc17ec9532ba97da496696e6a31f07b1cd0679")]
 [assembly: System.Reflection.AssemblyProductAttribute("PortalPsicologia")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PortalPsicologia")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

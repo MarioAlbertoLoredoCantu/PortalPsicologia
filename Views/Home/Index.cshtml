@@ -1,10 +1,10 @@
-﻿@using Microsoft.AspNetCore.Authentication
+﻿@using Microsoft.AspNetCore.Authentication 
 @using Microsoft.AspNetCore.Authentication.Cookies
 @using Microsoft.AspNetCore.Authentication.Google
 
 @{
     ViewData["Title"] = "Inicio";
-    Layout = "_Layout"; // Usa el layout principal
+    Layout = "_Layout";
     var rol = Context.Session.GetString("UsuarioRol");
     var isLoggedIn = User.Identity.IsAuthenticated;
 }
@@ -15,84 +15,115 @@
             background-image: url('/img/fondoUn1.png');
             background-size: cover;
             background-position: center;
-            height: 100vh;
-            color: white;
-            text-shadow:  none !important;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
         }
 
-        .inicio-container {
+        .hero {
+            height: 45vh; /* Altura reducida */
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            flex-direction: column;
             text-align: center;
-            height: 80vh;
-        }
-
-        .inicio-container h1 {
-            font-size: 2.8rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .inicio-container p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin-bottom: 30px;
-        }
-
-        .btn-iniciar {
-            background-color: red;
             color: white;
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            padding: 20px 10px;
         }
 
-        .btn-iniciar:hover {
-            background-color: darkred;
+        .hero h1 {
+            font-size: 2.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
-        .btn-cerrar {
-            margin-top: 30px;
+        .hero p {
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 0;
+        }
+
+        .contenedor {
+            max-width: 900px;
+            margin: 0 auto;
+            margin-top: -40px; /* Superposición leve hacia la hero */
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.97);
+            border: 2px solid #b80000;
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .contenedor h2 {
+            color: #b80000;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .contenedor p {
+            margin: 0;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .boton-principal {
             background-color: #b80000;
             color: white;
             padding: 12px 30px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 8px;
+        }
+
+        .boton-principal:hover {
+            background-color: #920000;
+        }
+
+        .boton-secundario {
+            background-color: #444;
+            color: white;
+            padding: 10px 26px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
+            font-size: 1rem;
+            margin-top: 15px;
         }
 
-        .btn-cerrar:hover {
-            background-color: #930000;
+        .boton-secundario:hover {
+            background-color: #222;
         }
     </style>
 }
 
-<div class="inicio-container">
-    <h1>Bienvenido al Examen Psicométrico de la<br> Universidad del Norte</h1>
+<div class="hero">
+    <h1>Bienvenido al Examen Psicométrico</h1>
     <p>
-        La Universidad del Norte ofrece un proceso que guía a los estudiantes en la elección de una carrera o profesión que se ajuste a sus intereses, habilidades, valores y personalidad.
-        Se enfoca en ayudar a tomar decisiones informadas y a lograr una mayor satisfacción en el ámbito profesional.
+        La Universidad del Norte te acompaña en la elección de tu camino profesional, con base en tus intereses, valores y habilidades.
     </p>
+</div>
+
+<div class="contenedor">
+    <h2>¿Estás listo para comenzar?</h2>
 
     @if (!isLoggedIn)
     {
-        <a class="btn-iniciar" href="/login/google">Iniciar sesión</a>
+        <a class="boton-principal" href="/login/google">Iniciar sesión con Google</a>
     }
     else
     {
-        <p>Hola, @User.Identity.Name</p>
-        <a href="/ExamenPsico/Iniciar" class="btn-iniciar">Iniciar Examen</a>
+        <p>Hola, <strong>@User.Identity.Name</strong></p>
+        <a href="/ExamenPsico/Iniciar" class="boton-principal">Iniciar Examen</a>
 
-        <form method="post" action="/login/logout" style="margin-top: 20px;">
-            <button type="submit" class="btn-cerrar">Cerrar sesión</button>
+        <form method="post" action="/login/logout">
+            <button type="submit" class="boton-secundario">Cerrar sesión</button>
         </form>
     }
 </div>
+
