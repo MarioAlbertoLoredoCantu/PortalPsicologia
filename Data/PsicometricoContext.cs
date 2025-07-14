@@ -16,7 +16,7 @@ namespace PortalPsicologia.Data
             modelBuilder.Entity<RespuestaExamen>()
                .HasKey(r => r.RespuestaId);
             modelBuilder.Entity<ResultadoExamen>().HasKey(r => r.ResultadoId);
-                modelBuilder.Entity<ResultadoExamen>().ToTable("ResultadoExamen");
+            modelBuilder.Entity<ResultadoExamen>().ToTable("ResultadoExamen");
 
         }
 
@@ -26,7 +26,8 @@ namespace PortalPsicologia.Data
         public DbSet<RespuestaExamen> RespuestasExamen { get; set; }
         public DbSet<RespuestaExamen> RespuestasPsicometrico { get; set; }
         public DbSet<ResultadoExamen> ResultadosExamen { get; set; }
-
+        
+        public DbSet<ContenidoEditable> ContenidoEditable { get; set; }
 
     }
 }

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PortalPsicologia.styles.css" asp-append-version="true" />
+
     <style>
         .navbar-custom {
             background-color: #b80000;
@@ -29,26 +30,38 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border-radius: 10px;
+            transition: all 0.4s ease-in-out;
         }
 
-        .navbar-nav .nav-link,
-.nav-item .dropdown-toggle {
-    color: white !important;
-    font-size: 1.3rem;
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    transition: all 0.4s ease-in-out;
-}
+        .navbar-nav .nav-link:hover,
+        .nav-item .dropdown-toggle:hover {
+            background-color: #d3d3d3 !important;
+            color: black !important;
+        }
 
-.navbar-nav .nav-link:hover,
-.nav-item .dropdown-toggle:hover {
-    background-color: #d3d3d3 !important;
-    color: black !important;
-}
+        /* ✅ Eliminamos contorno cuando se enfoca con clic o teclado */
+        .dropdown-toggle:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
 
+        /* ✅ Animación suave al mostrar dropdowns */
+        .dropdown-menu {
+            opacity: 0;
+            transform: translateY(10px);
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: block !important;
+            pointer-events: none;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+            pointer-events: auto;
+        }
 
         .dropdown-menu {
             background-color: #003d80;
@@ -78,6 +91,7 @@
             align-items: center;
         }
     </style>
+
     @RenderSection("Styles", required: false)
 </head>
 <body>
@@ -105,7 +119,7 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Servicios</a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button">Servicios</a>
                             <ul class="dropdown-menu">
                                 @if (rol == "Administrador" || rol == "Docente" || rol == "Estudiante")
                                 {
@@ -117,17 +131,16 @@
                 </div>
 
                 <!-- CENTRO -->
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="navbar-section">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="ExamenPsico" asp-action="Iniciar">Examen</a>
-            </li>
-        </ul>
-    </div>
-}
-
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="navbar-section">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ExamenPsico" asp-action="Iniciar">Examen</a>
+                            </li>
+                        </ul>
+                    </div>
+                }
 
                 <!-- DERECHA -->
                 <div class="navbar-section">
@@ -135,7 +148,7 @@
                         @if (rol == "Administrador")
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Gestión de Examen</a>
+                                <a class="nav-link dropdown-toggle" href="#">Gestión de Examen</a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-controller="Pregunta" asp-action="Index">Administrar Preguntas</a></li>
                                 </ul>
@@ -144,7 +157,7 @@
                         @if (rol == "Administrador" || rol == "Docente")
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Gestión de Usuarios</a>
+                                <a class="nav-link dropdown-toggle" href="#">Gestión de Usuarios</a>
                                 <ul class="dropdown-menu">
                                     @if (rol == "Administrador")
                                     {
@@ -163,13 +176,12 @@
     </div>
 </nav>
 
-<div class="container">
+<!-- 🧱 Contenedor para el contenido de cada vista -->
+<div style="width: 100%; padding: 0; margin: 0;">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
 </div>
-
-
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -177,4 +189,3 @@
 @RenderSection("Scripts", required: false)
 </body>
 </html>
-

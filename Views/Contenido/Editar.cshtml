@@ -1,0 +1,21 @@
+@model PortalPsicologia.Models.ContenidoEditable
+
+@{
+    ViewData["Title"] = "Editar Contenido";
+    Layout = "_Layout";
+}
+
+<h2>Editar Contenido: @Model.Clave</h2>
+
+<form asp-action="Editar" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="Clave" />
+    
+    <div class="form-group">
+        <label>Contenido</label>
+        <textarea asp-for="Texto" class="form-control" rows="8"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

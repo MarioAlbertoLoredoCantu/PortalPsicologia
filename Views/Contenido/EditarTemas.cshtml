@@ -1,0 +1,24 @@
+@model PortalPsicologia.Models.ViewModels.ContenidoEditableViewModel
+
+@{
+    ViewData["Title"] = "Editar Temas";
+    Layout = "_Layout";
+}
+
+<h2>Editar Temas: @Model.Clave</h2>
+
+<form asp-action="EditarTemas" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="Clave" />
+
+    @for (int i = 0; i < 5; i++)
+    {
+        <div class="form-group">
+            <label>Tema @(i + 1)</label>
+            <input type="text" name="Lineas[@i]" value="@(Model.Lineas.Count > i ? Model.Lineas[i] : "")" class="form-control" />
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
