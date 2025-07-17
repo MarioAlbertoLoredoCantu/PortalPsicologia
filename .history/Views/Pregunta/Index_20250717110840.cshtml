@@ -118,7 +118,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var p in Model.ListaPreguntas)
+            @foreach (var p in Model.ListaPreguntas.OrderByDescending(p => p.Activa).ThenBy(p => p.Orden))
             {
                 <tr data-id="@p.PreguntaId" class="@(p.Activa ? "pregunta-activa" : "")">
                     <td>@(p.Activa ? p.Orden.ToString() : "-")</td>

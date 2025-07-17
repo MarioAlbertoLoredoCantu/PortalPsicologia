@@ -36,13 +36,6 @@ public class PreguntaController : Controller
     .OrderByDescending(p => p.Activa)
     .ThenBy(p => p.Orden)
     .ToList();
-// --- TEST DE ESCRITURA EN BASE DE DATOS ---
-var primeraPregunta = _context.Preguntas.FirstOrDefault();
-if (primeraPregunta != null)
-{
-    primeraPregunta.Texto = "Prueba cambio";
-    _context.SaveChanges();
-}
 
 
         return View(modelo);

@@ -5610,24 +5610,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mlore\\.nuget\\packages\\": {}
+    "C:\\Users\\Manyra Cantú\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mlore\\PortalPsicologia-3\\PortalPsicologia.csproj",
+      "projectUniqueName": "C:\\Users\\Manyra Cantú\\PortalPsicologia-3\\PortalPsicologia.csproj",
       "projectName": "PortalPsicologia",
-      "projectPath": "C:\\Users\\mlore\\PortalPsicologia-3\\PortalPsicologia.csproj",
-      "packagesPath": "C:\\Users\\mlore\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mlore\\PortalPsicologia-3\\obj\\",
+      "projectPath": "C:\\Users\\Manyra Cantú\\PortalPsicologia-3\\PortalPsicologia.csproj",
+      "packagesPath": "C:\\Users\\Manyra Cantú\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Manyra Cantú\\PortalPsicologia-3\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\mlore\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Manyra Cantú\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5645,8 +5647,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -5690,7 +5691,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

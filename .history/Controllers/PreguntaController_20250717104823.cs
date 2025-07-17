@@ -32,18 +32,7 @@ public class PreguntaController : Controller
             }
         }
 
-        modelo.ListaPreguntas = _context.Preguntas
-    .OrderByDescending(p => p.Activa)
-    .ThenBy(p => p.Orden)
-    .ToList();
-// --- TEST DE ESCRITURA EN BASE DE DATOS ---
-var primeraPregunta = _context.Preguntas.FirstOrDefault();
-if (primeraPregunta != null)
-{
-    primeraPregunta.Texto = "Prueba cambio";
-    _context.SaveChanges();
-}
-
+        modelo.ListaPreguntas = _context.Preguntas.OrderBy(p => p.Orden).ToList();
 
         return View(modelo);
     }
@@ -228,13 +217,23 @@ public IActionResult InicializarOrden()
     return RedirectToAction("Index");
 }
 [HttpPost]
-public IActionResult Reordenar([FromBody] List<int> ids)
+[IgnoreAntiforgeryToken] // ✅ Solo si no usas el token en el fetch
+public IActionResult Reordenar([FromBody] List<int> nuevosIds)
 {
+    if (nuevosIds == null || nuevosIds.Count == 0)
+    {
+        return BadRequest(new { error = "La lista está vacía o no se recibió correctamente." });
+    }
+
     try
     {
-        for (int i = 0; i < ids.Count; i++)
+        var preguntas = _context.Preguntas
+            .Where(p => nuevosIds.Contains(p.PreguntaId))
+            .ToList();
+
+        for (int i = 0; i < nuevosIds.Count; i++)
         {
-            var pregunta = _context.Preguntas.FirstOrDefault(p => p.PreguntaId == ids[i]);
+            var pregunta = preguntas.FirstOrDefault(p => p.PreguntaId == nuevosIds[i]);
             if (pregunta != null)
             {
                 pregunta.Orden = i + 1;
@@ -243,14 +242,14 @@ public IActionResult Reordenar([FromBody] List<int> ids)
 
         _context.SaveChanges();
 
-        return Json(new { mensaje = "Orden actualizado correctamente" });
+        return Json(new { mensaje = "Preguntas reordenadas con éxito." });
     }
     catch (Exception ex)
     {
+        // 👇 devuelve el error en JSON en vez de vaciar la consola
         return StatusCode(500, new { error = ex.Message });
     }
 }
-
 
 
 
