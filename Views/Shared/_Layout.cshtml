@@ -1,4 +1,4 @@
-﻿@{
+﻿ @{
     Layout = null;
 }
 
@@ -40,13 +40,11 @@
             color: black !important;
         }
 
-        /* ✅ Eliminamos contorno cuando se enfoca con clic o teclado */
         .dropdown-toggle:focus {
             outline: none !important;
             box-shadow: none !important;
         }
 
-        /* ✅ Animación suave al mostrar dropdowns */
         .dropdown-menu {
             opacity: 0;
             transform: translateY(10px);
@@ -121,8 +119,14 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button">Servicios</a>
                             <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="Servicios" asp-action="Alumnos">Atención a Alumnos</a></li>
+                                <li><a class="dropdown-item" asp-controller="Servicios" asp-action="Estudiantes">Atención a Estudiantes</a></li>
+                                <li><a class="dropdown-item" asp-controller="Servicios" asp-action="Docentes">Atención a Docentes</a></li>
+                                <li><a class="dropdown-item" asp-controller="Servicios" asp-action="Administrativos">Atención personal administrativa</a></li>
+
                                 @if (rol == "Administrador" || rol == "Docente" || rol == "Estudiante")
                                 {
+                                    <li><hr class="dropdown-divider" /></li>
                                     <li><a class="dropdown-item" asp-controller="Home" asp-action="Manual">Manual de Ayuda</a></li>
                                 }
                             </ul>

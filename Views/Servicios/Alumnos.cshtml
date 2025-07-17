@@ -1,0 +1,100 @@
+@{
+    ViewData["Title"] = "Atención a Alumnos";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .hero-alumnos {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/img/fondoUn1.png') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .hero-alumnos h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .seccion-info {
+            padding: 50px 15px;
+            background-color: #fff;
+            animation: fadeSlideUp 1s ease-in-out;
+        }
+
+        .seccion-info h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #b80000;
+        }
+
+        .card-info {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #f9f9f9;
+            border-left: 5px solid #b80000;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card-info:hover {
+            transform: scale(1.01);
+        }
+
+        .card-info h3 {
+            color: #333;
+        }
+
+        .card-info ul {
+            padding-left: 20px;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @@keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+}
+
+<div class="hero-alumnos">
+    <h1>Atención a Alumnos de Nuevo Ingreso</h1>
+    <p>Descubre los servicios de orientación, acompañamiento y apoyo durante tu trayectoria universitaria.</p>
+</div>
+
+<div class="seccion-info">
+    <h2>Servicios que te ofrecemos</h2>
+    <div class="card-info">
+        <h3>Acompañamiento Psicoeducativo</h3>
+        <p>
+            Este programa busca brindar apoyo emocional y orientación académica a los alumnos de nuevo ingreso mediante sesiones personalizadas.
+        </p>
+
+        <h3>Temas abordados:</h3>
+        <ul>
+            <li>Adaptación a la vida universitaria</li>
+            <li>Manejo del tiempo y estrategias de estudio</li>
+            <li>Ansiedad ante los exámenes</li>
+            <li>Conflictos personales o familiares</li>
+        </ul>
+
+        <h3>¿Cómo acceder?</h3>
+        <p>
+            Puedes solicitar una cita presencial en el área de psicopedagogía o escribir al correo:
+            <a href="mailto:psicopedagogia@un.edu.mx">psicopedagogia@un.edu.mx</a>.
+        </p>
+    </div>
+</div>

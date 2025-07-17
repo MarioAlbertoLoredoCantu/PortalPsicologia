@@ -217,23 +217,35 @@ public IActionResult InicializarOrden()
     return RedirectToAction("Index");
 }
 [HttpPost]
+[IgnoreAntiforgeryToken] // ✅ Opcional si no manejas tokens en fetch
 public IActionResult Reordenar([FromBody] List<int> nuevosIds)
 {
-    var preguntas = _context.Preguntas
-        .Where(p => nuevosIds.Contains(p.PreguntaId))
-        .ToList();
+    if (nuevosIds == null || nuevosIds.Count == 0)
+        return BadRequest("Lista vacía o inválida.");
 
-    for (int i = 0; i < nuevosIds.Count; i++)
+    try
     {
-        var pregunta = preguntas.FirstOrDefault(p => p.PreguntaId == nuevosIds[i]);
-        if (pregunta != null)
-        {
-            pregunta.Orden = i + 1;
-        }
-    }
+        var preguntas = _context.Preguntas
+            .Where(p => nuevosIds.Contains(p.PreguntaId))
+            .ToList();
 
-    _context.SaveChanges();
-    return Ok();
+        for (int i = 0; i < nuevosIds.Count; i++)
+        {
+            var pregunta = preguntas.FirstOrDefault(p => p.PreguntaId == nuevosIds[i]);
+            if (pregunta != null)
+            {
+                pregunta.Orden = i + 1;
+            }
+        }
+
+        _context.SaveChanges();
+        return Json(new { mensaje = "Reordenamiento exitoso" }); // ✅ Devolver respuesta JSON limpia
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, "Error interno: " + ex.Message);
+    }
 }
+
 
 }

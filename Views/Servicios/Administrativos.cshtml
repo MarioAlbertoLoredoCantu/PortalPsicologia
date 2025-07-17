@@ -1,0 +1,109 @@
+@{
+    ViewData["Title"] = "Atención a Personal Administrativo";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <style>
+        .hero-admin {
+            background: url('/img/fondoUn1.png') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            padding: 100px 20px 60px;
+            text-align: center;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .hero-admin h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+        }
+
+        .hero-admin p {
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .card-contenido {
+            max-width: 1000px;
+            margin: 30px auto 60px;
+            background: white;
+            padding: 40px 50px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 6px solid #aa048e;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .card-contenido h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #aa048e;
+        }
+
+        .card-contenido h3 {
+            color: #aa048e;
+            margin-top: 25px;
+            font-size: 1.3rem;
+        }
+
+        .card-contenido ul {
+            padding-left: 20px;
+        }
+
+        .card-contenido li {
+            margin-bottom: 8px;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            font-size: 1.05rem;
+        }
+
+        .contact-info a {
+            color: #046daa;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @@keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+}
+
+<div class="hero-admin">
+    <h1>Atención a Personal Administrativo</h1>
+    <p>Brindamos acompañamiento emocional y orientación personalizada en tu entorno laboral</p>
+</div>
+
+<div class="card-contenido">
+    <h2>¿Qué es?</h2>
+    <p>Es un espacio de acompañamiento emocional y orientación para el personal administrativo, donde se ofrece apoyo personalizado en su entorno laboral, promoviendo un ambiente saludable y productivo.</p>
+
+    <h3>¿Qué ofrece?</h3>
+    <ul>
+        <li>Sesiones individuales para abordar situaciones emocionales o laborales.</li>
+        <li>Asesoramiento sobre manejo del estrés, relaciones laborales, motivación y productividad.</li>
+        <li>Canalización para atención psicológica, si es necesario.</li>
+    </ul>
+
+    <h3>¿Cómo acceder?</h3>
+    <p>Puede agendar una cita directamente en el Departamento de Psicopedagogía o contactar por los siguientes medios:</p>
+
+    <div class="contact-info">
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/5218671939096" target="_blank">867 193 9096</a> y <a href="https://wa.me/5218671939140" target="_blank">867 193 9140</a></p>
+        <p><strong>Correo electrónico:</strong> <a href="mailto:psicopedagogia@un.edu.mx">psicopedagogia@un.edu.mx</a></p>
+    </div>
+</div>

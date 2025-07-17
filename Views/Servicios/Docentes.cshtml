@@ -1,0 +1,108 @@
+@{
+    ViewData["Title"] = "Atención a Docentes";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .seccion-fondo {
+            background: url('/img/fondoUn1.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 10vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 50px 15px;
+        }
+
+        .seccion-fondo h1 {
+            font-size: 2.8rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 4px black;
+        }
+
+        .seccion-fondo p {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            text-shadow: 1px 1px 3px black;
+        }
+
+        .titulo-servicios {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.8rem;
+            color: #7e1fff;
+            font-weight: bold;
+        }
+
+        .contenedor-card {
+            max-width: 1000px;
+            margin: 30px auto 60px;
+            background: white;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 6px solid #7e1fff;
+            animation: fadeIn 1s ease;
+        }
+
+        .contenedor-card h2 {
+            color: #333;
+            font-size: 1.6rem;
+            margin-top: 20px;
+        }
+
+        .contenedor-card p, .contenedor-card li {
+            font-size: 1.1rem;
+            color: #444;
+        }
+
+        .contenedor-card ul {
+            margin-left: 20px;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+}
+
+<div class="seccion-fondo">
+    <h1>Atención a Docentes</h1>
+    <p>Espacio de acompañamiento para detectar problemáticas que afectan el aprendizaje de los alumnos.</p>
+</div>
+
+<h2 class="titulo-servicios">Servicios que ofrecemos</h2>
+
+<div class="contenedor-card">
+    <h2>¿Qué es?</h2>
+    <p>
+        Es un espacio de acompañamiento a la función docente que favorece la detección oportuna de problemáticas
+        que puedan estar incidiendo en el proceso de aprendizaje de los alumnos.
+    </p>
+
+    <h2>¿Qué ofrece?</h2>
+    <ul>
+        <li>Canalización para atención psicológica de los alumnos.</li>
+        <li>Asesoría sobre situaciones especiales con alumnos.</li>
+        <li>Seguimiento de casos en conjunto con el Departamento de Psicopedagogía.</li>
+    </ul>
+
+    <h2>¿Cómo acceder?</h2>
+    <p>
+        El docente puede acudir directamente al Departamento de Psicopedagogía o enviar un correo a: 
+        <a href="mailto:psicopedagogia@un.edu.mx">psicopedagogia@un.edu.mx</a>.
+    </p>
+</div>

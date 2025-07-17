@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Atención a Estudiantes";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <style>
+        .hero-header {
+            background: url('/img/fondoUn1.png') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 80px 0;
+            color: white;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        }
+
+        .hero-header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero-header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .contenido {
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            background-color: #f9f9f9;
+        }
+
+        .card-servicio {
+            background-color: white;
+            padding: 30px;
+            border-left: 6px solid #003d80; /* azul fuerte */
+            border-radius: 12px;
+            box-shadow: 0 0 18px rgba(0,0,0,0.06);
+            max-width: 950px;
+            width: 100%;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .card-servicio h2 {
+            color: #003d80;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card-servicio h3 {
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @@keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @@keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+}
+
+<div class="hero-header">
+    <h1>@ViewData["Title"]</h1>
+    <p>Conoce el apoyo académico y orientación disponible para estudiantes universitarios.</p>
+</div>
+
+<div class="contenido">
+    <div class="card-servicio">
+        <h2>¿A quién está dirigido?</h2>
+        <p>
+            Este servicio está orientado a los alumnos que presentan alguna situación académica que requiera orientación y seguimiento personalizado,
+            ya sea por parte del personal administrativo, docente o del mismo estudiante.
+        </p>
+
+        <h2>¿Qué ofrece?</h2>
+        <ul>
+            <li>Canalización para recibir atención en las distintas áreas de la institución.</li>
+            <li>Orientación para la solución de problemas académicos o personales.</li>
+            <li>Seguimiento de casos para asegurar la atención integral del alumno.</li>
+        </ul>
+
+        <h2>¿Cómo acceder?</h2>
+        <p>
+            El estudiante puede acudir directamente al área de atención o puede ser canalizado por docentes, coordinadores o administrativos de la Universidad.
+        </p>
+    </div>
+</div>

@@ -205,9 +205,11 @@
             'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value || ''
         },
         body: JSON.stringify(ids)
-    }).then(() => {
-        location.reload(); // 👈 fuerza la recarga de la página
-    });
+    }).then(data => {
+    console.log(data.mensaje);
+    location.reload(); // ✅ vuelve a cargar la tabla con el nuevo orden
+})
+
 }
 
     </script>
