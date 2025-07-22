@@ -1,7 +1,7 @@
 @model PortalPsicologia.Models.ContenidoEditable
 
 @{
-    ViewData["Title"] = "Editar Contenido";
+    ViewData["Title"] = "Editar Atención a Alumnos";
     Layout = "_Layout";
 }
 
@@ -77,9 +77,9 @@
 }
 
 <div class="editor-container">
-    <h2>Editar Contenido: @Model.Clave</h2>
+    <h2>Editar Atención a Alumnos</h2>
 
-    <form asp-action="Editar" method="post">
+    <form asp-action="EditarServicio" method="post">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="Clave" />
 
@@ -90,13 +90,21 @@
 
         <div class="btn-group-custom">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            @{
+                var accionCancelar = Model.Clave switch {
+                    "servicio-alumnos" => "Alumnos",
+                    "servicio-docentes" => "Docentes",
+                    "servicio-estudiantes" => "Estudiantes",
+                    "servicio-administrativos" => "Administrativos",
+                    _ => "Index"
+                };
+            }
+            <a asp-controller="Servicios" asp-action="@accionCancelar" class="btn btn-secondary">Cancelar</a>
         </div>
     </form>
 </div>
 
 @section Scripts {
-    <!-- TinyMCE -->
     <script src="https://cdn.tiny.cloud/1/caddokn82nsyzvdaawu5mwjd9b5t28kz1tn11h6x95xuopnb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
@@ -105,6 +113,8 @@
             plugins: 'lists link advlist textcolor',
             toolbar: 'undo redo | bold italic underline | forecolor backcolor | fontselect fontsizeselect | bullist numlist | link',
             fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt',
+            branding: false,
+            height: 300,
             font_family_formats:
                 'Arial=arial,helvetica,sans-serif;' +
                 'Courier New=courier new,courier,monospace;' +
@@ -112,9 +122,8 @@
                 'Tahoma=tahoma,arial,helvetica,sans-serif;' +
                 'Times New Roman=times new roman,times;' +
                 'Verdana=verdana,geneva;',
-            branding: false,
-            height: 300,
-            content_style: "p { margin: 2px 0; line-height: 1.2; }"
         });
     </script>
 }
+
+

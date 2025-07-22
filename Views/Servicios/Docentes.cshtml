@@ -1,6 +1,9 @@
+@inject PortalPsicologia.Data.PsicometricoContext _context
 @{
     ViewData["Title"] = "Atención a Docentes";
     Layout = "_Layout";
+    var rol = Context.Session.GetString("UsuarioRol");
+    var contenido = _context.ContenidoEditable.FirstOrDefault(c => c.Clave == "servicio-docentes")?.Texto ?? "Información no disponible.";
 }
 
 @section Styles {
@@ -87,22 +90,14 @@
 <h2 class="titulo-servicios">Servicios que ofrecemos</h2>
 
 <div class="contenedor-card">
-    <h2>¿Qué es?</h2>
-    <p>
-        Es un espacio de acompañamiento a la función docente que favorece la detección oportuna de problemáticas
-        que puedan estar incidiendo en el proceso de aprendizaje de los alumnos.
-    </p>
+    @Html.Raw(contenido)
 
-    <h2>¿Qué ofrece?</h2>
-    <ul>
-        <li>Canalización para atención psicológica de los alumnos.</li>
-        <li>Asesoría sobre situaciones especiales con alumnos.</li>
-        <li>Seguimiento de casos en conjunto con el Departamento de Psicopedagogía.</li>
-    </ul>
-
-    <h2>¿Cómo acceder?</h2>
-    <p>
-        El docente puede acudir directamente al Departamento de Psicopedagogía o enviar un correo a: 
-        <a href="mailto:psicopedagogia@un.edu.mx">psicopedagogia@un.edu.mx</a>.
-    </p>
+    @if (rol == "Administrador")
+    {
+        <div class="mt-3 text-end">
+            <a class="btn btn-sm btn-outline-primary" href="@Url.Action("EditarServicio", "Contenido", new { clave = "servicio-docentes" })">
+                Editar Información
+            </a>
+        </div>
+    }
 </div>

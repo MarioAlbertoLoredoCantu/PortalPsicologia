@@ -117,24 +117,35 @@
         </div>
     </form>
 
-    <div class="tiempo-restante">
-        Tiempo restante: <span id="contador">15</span> segundos
-    </div>
+  <div class="tiempo-restante">
+    Tiempo restante: <span id="contador"></span>
 </div>
 
 @section Scripts {
     <script>
-        let tiempo = 15;
+        let tiempo = @Model.TiempoRestante; // Tiempo en segundos
         const contadorElemento = document.getElementById('contador');
+
+        // Función para formatear en mm:ss
+        function formatTime(seconds) {
+            const minutos = Math.floor(seconds / 60);
+            const segundos = seconds % 60;
+            return `${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
+        }
+
+        // Inicializar el contador
+        contadorElemento.textContent = formatTime(tiempo);
 
         const interval = setInterval(() => {
             tiempo--;
-            contadorElemento.textContent = tiempo;
+            contadorElemento.textContent = formatTime(tiempo);
 
             if (tiempo <= 0) {
                 clearInterval(interval);
-                document.getElementById('formPregunta').submit();
+                window.location.href = '@Url.Action("ExamenExpirado", "ExamenPsico")';
             }
         }, 1000);
     </script>
 }
+
+

@@ -15,19 +15,21 @@ public class ExamenPsicoController : Controller
     private const string SessionKeyPreguntas = "Preguntas";
     private const string SessionKeyRespuestas = "Respuestas";
 
+    private const string SessionKeyInicioExamen = "InicioExamen";
+    private const int TiempoMaximoSegundos = 10; // 15 minutos
+
     public ExamenPsicoController(PsicometricoContext context)
     {
         _context = context;
     }
 
- [HttpGet]
+[HttpGet]
 public IActionResult Iniciar()
 {
-    // ✅ Siempre limpiar las sesiones para que se reinicie
     HttpContext.Session.Remove(SessionKeyPreguntas);
     HttpContext.Session.Remove(SessionKeyRespuestas);
+    HttpContext.Session.Remove(SessionKeyInicioExamen);
 
-    // ✅ Volver a cargar las preguntas ordenadas según la base de datos
     var listaPreguntas = _context.Preguntas
         .Where(p => p.Activa)
         .OrderBy(p => p.Orden)
@@ -40,33 +42,53 @@ public IActionResult Iniciar()
 
     HttpContext.Session.Set(SessionKeyPreguntas, listaPreguntas);
     HttpContext.Session.Set(SessionKeyRespuestas, new List<int?>(new int?[listaPreguntas.Count]));
+    HttpContext.Session.Set(SessionKeyInicioExamen, DateTime.Now);
 
     return RedirectToAction(nameof(ExamenPsico), new { indice = 0 });
 }
 
 
 
+
     [HttpGet]
-    public IActionResult ExamenPsico(int indice)
+public IActionResult ExamenPsico(int indice)
+{
+    var inicioExamen = HttpContext.Session.Get<DateTime?>(SessionKeyInicioExamen);
+    if (!inicioExamen.HasValue || (DateTime.Now - inicioExamen.Value).TotalSeconds >= TiempoMaximoSegundos)
     {
-        var listaPreguntas = HttpContext.Session.Get<List<Pregunta>>(SessionKeyPreguntas);
-        var respuestasUsuario = HttpContext.Session.Get<List<int?>>(SessionKeyRespuestas);
-
-        if (listaPreguntas == null || respuestasUsuario == null || indice < 0 || indice >= listaPreguntas.Count)
-        {
-            return RedirectToAction(nameof(Iniciar));
-        }
-
-        var viewModel = new PreguntaViewModel
-        {
-            Indice = indice,
-            PreguntaActual = listaPreguntas[indice],
-            TotalPreguntas = listaPreguntas.Count,
-            RespuestaSeleccionada = respuestasUsuario[indice]
-        };
-
-        return View("examenPsico", viewModel);
+        return RedirectToAction(nameof(ExamenExpirado));
     }
+
+    var listaPreguntas = HttpContext.Session.Get<List<Pregunta>>(SessionKeyPreguntas);
+    var respuestasUsuario = HttpContext.Session.Get<List<int?>>(SessionKeyRespuestas);
+
+    if (listaPreguntas == null || respuestasUsuario == null || indice < 0 || indice >= listaPreguntas.Count)
+    {
+        return RedirectToAction(nameof(Iniciar));
+    }
+
+    var tiempoRestante = TiempoMaximoSegundos - (int)(DateTime.Now - inicioExamen.Value).TotalSeconds;
+
+    var viewModel = new PreguntaViewModel
+    {
+        Indice = indice,
+        PreguntaActual = listaPreguntas[indice],
+        TotalPreguntas = listaPreguntas.Count,
+        RespuestaSeleccionada = respuestasUsuario[indice],
+        TiempoRestante = tiempoRestante // NUEVO CAMPO en el ViewModel
+    };
+
+    return View("examenPsico", viewModel);
+}
+[HttpGet]
+public IActionResult ExamenExpirado()
+{
+    HttpContext.Session.Remove("Preguntas");
+    HttpContext.Session.Remove("Respuestas");
+    HttpContext.Session.Remove("InicioExamen");
+    return View("ExamenExpirado");
+}
+
 
     [HttpPost]
     [ValidateAntiForgeryToken]

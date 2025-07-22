@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Documento no disponible";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5 text-center">
+    <h2 class="text-danger">PDF no encontrado</h2>
+    <p>
+        El documento solicitado <strong>"@ViewBag.Tema"</strong> no se encuentra disponible en este momento.
+        <br />
+        Es posible que aún no haya sido cargado o que el nombre del archivo sea incorrecto.
+    </p>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-primary mt-3">Volver al inicio</a>
+</div>

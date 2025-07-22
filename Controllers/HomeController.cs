@@ -29,12 +29,13 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
     public IActionResult NoAutorizado()
-{
-    return View();
-}
-public IActionResult Manual()
-{
-    return View();
-}
+    {
+        return View();
+    }
+    public IActionResult Manual()
+    {
+        return View();
+    }
+
 
 }

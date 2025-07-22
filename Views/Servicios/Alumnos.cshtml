@@ -1,6 +1,11 @@
+@using Microsoft.EntityFrameworkCore
+@inject PortalPsicologia.Data.PsicometricoContext _context
+
 @{
     ViewData["Title"] = "Atención a Alumnos";
     Layout = "_Layout";
+    var rol = Context.Session.GetString("UsuarioRol");
+    var contenido = _context.ContenidoEditable.FirstOrDefault(c => c.Clave == "servicio-alumnos")?.Texto ?? "Información no disponible.";
 }
 
 @section Styles {
@@ -77,24 +82,17 @@
 
 <div class="seccion-info">
     <h2>Servicios que te ofrecemos</h2>
+
     <div class="card-info">
-        <h3>Acompañamiento Psicoeducativo</h3>
-        <p>
-            Este programa busca brindar apoyo emocional y orientación académica a los alumnos de nuevo ingreso mediante sesiones personalizadas.
-        </p>
+        @Html.Raw(contenido)
 
-        <h3>Temas abordados:</h3>
-        <ul>
-            <li>Adaptación a la vida universitaria</li>
-            <li>Manejo del tiempo y estrategias de estudio</li>
-            <li>Ansiedad ante los exámenes</li>
-            <li>Conflictos personales o familiares</li>
-        </ul>
-
-        <h3>¿Cómo acceder?</h3>
-        <p>
-            Puedes solicitar una cita presencial en el área de psicopedagogía o escribir al correo:
-            <a href="mailto:psicopedagogia@un.edu.mx">psicopedagogia@un.edu.mx</a>.
-        </p>
+        @if (rol == "Administrador")
+        {
+            <div class="mt-3 text-end">
+                <a class="btn btn-sm btn-outline-primary" href="@Url.Action("EditarServicio", "Contenido", new { clave = "servicio-alumnos" })">
+                    Editar Información
+                </a>
+            </div>
+        }
     </div>
 </div>

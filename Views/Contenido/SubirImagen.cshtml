@@ -1,7 +1,5 @@
-@model PortalPsicologia.Models.ViewModels.ContenidoEditableViewModel
-
 @{
-    ViewData["Title"] = "Editar Temas";
+    ViewData["Title"] = "Subir Imagen de Tema";
     Layout = "_Layout";
 }
 
@@ -18,26 +16,28 @@
             color: #343a40;
         }
 
-        .editor-container {
-            max-width: 800px;
-            margin: 30px auto;
+        .upload-container {
+            max-width: 600px;
+            margin: 40px auto;
             background: #ffffff;
             padding: 25px 30px;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
+        .form-group {
+            margin-bottom: 20px;
+        }
+
         label {
             font-weight: bold;
-            margin-bottom: 5px;
             display: block;
+            margin-bottom: 8px;
         }
 
         .form-control {
+            padding: 8px;
             border-radius: 6px;
-            padding: 10px;
-            font-size: 1rem;
-            margin-bottom: 15px;
             border: 1px solid #ced4da;
         }
 
@@ -52,7 +52,6 @@
             font-size: 1rem;
             font-weight: bold;
             border-radius: 6px;
-            transition: 0.3s ease;
         }
 
         .btn-primary {
@@ -81,30 +80,34 @@
             gap: 15px;
             margin-top: 20px;
         }
+
+        .alert {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
     </style>
 }
 
-<div class="editor-container">
-    <h2>Editar Temas: @Model.Clave</h2>
+<div class="upload-container">
+    <h2>Subir Imagen de Tema</h2>
 
-    <form asp-action="EditarTemas" method="post">
-        <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="Clave" />
-
-        @for (int i = 0; i < 5; i++)
-        {
-            <div class="form-group">
-                <label for="tema@(i + 1)">Tema @(i + 1)</label>
-                <input type="text" id="tema@(i + 1)" 
-                       name="Lineas[@i]" 
-                       value="@(Model.Lineas.Count > i ? Model.Lineas[i] : "")" 
-                       class="form-control" />
-            </div>
-        }
+    <form asp-controller="Contenido" asp-action="SubirImagen" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="imagenFile">Selecciona una imagen (JPG o PNG):</label>
+            <input type="file" name="imagenFile" accept=".jpg,.jpeg,.png" class="form-control" required />
+        </div>
 
         <div class="btn-group-custom">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Subir</button>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Cancelar</a>
         </div>
     </form>
+
+    @if (ViewBag.Mensaje != null)
+    {
+        <div class="alert alert-success">
+            @ViewBag.Mensaje
+        </div>
+    }
 </div>

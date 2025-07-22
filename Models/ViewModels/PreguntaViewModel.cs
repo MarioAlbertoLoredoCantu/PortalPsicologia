@@ -10,6 +10,7 @@ namespace PortalPsicologia.Models.ViewModels
         public Pregunta? PreguntaActual { get; set; }
         public int TotalPreguntas { get; set; } = 0;
         public int? RespuestaSeleccionada { get; set; }
+public int TiempoRestante { get; set; }
 
         // Para la gestión de preguntas (admin)
         public Pregunta Pregunta { get; set; } = new Pregunta();

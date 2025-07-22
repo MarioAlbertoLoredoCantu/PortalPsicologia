@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Authentication  
+﻿@using Microsoft.AspNetCore.Authentication   
 @using Microsoft.AspNetCore.Authentication.Cookies
 @using Microsoft.AspNetCore.Authentication.Google
 @inject PortalPsicologia.Data.PsicometricoContext _context
@@ -91,7 +91,8 @@
             background-color: #b80000;
             color: white;
             text-align: center;
-            padding: 40px 10px;
+            padding: 10px 1px;
+            padding-bottom: 10px;
         }
 
         .temas-ayuda {
@@ -111,64 +112,155 @@
             gap: 30px;
         }
 
-        .tema-card {
-            border: 2px dashed #ccc;
-            width: 300px;
-            height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.4s ease;
-            background-color: white;
-        }
-
-        .tema-card:hover {
-            transform: scale(1.05);
-            border-color: #1a039b;
-        }
-
-        .accordion {
-            background-color: #f5f5f5;
-            padding: 30px;
-            width: 100%;
-        }
-
-        .accordion-item {
-            background-color: white;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-            border-radius: 6px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-
-        .accordion-header {
-            padding: 15px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .accordion-body {
-            padding: 15px;
-            display: none;
-        }
-
-        .accordion-item.active .accordion-body {
-            display: block;
-        }
-
-        .imagen-final {
-            display: block;
-            margin: 40px auto 10px;
-            max-width: 500px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
+      
 
         @@keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+hr {
+    margin-bottom: 0;
+}
+
+.mapa-section {
+  position: relative;
+            background: url('/img/fondoUn1.png') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            color: white;
+            height: 65vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 5%;
+            animation: fadeIn 2s ease-in;
+}
+
+
+.mapa-container iframe {
+    border: 2px solid white;
+}
+
+.mapa-container p {
+    color: white;
+    font-weight: bold;
+}
+
+hr {
+    border: 0;
+    height: 11px;
+    background: linear-gradient(to right, #c50202, #c50202) center/80% 8px no-repeat,
+                linear-gradient(to right, #8d2d2d, #8b2424) center/80% 1px no-repeat;
+    margin: 100px auto 0 auto;
+    width: 100%;
+}
+
+.mapa-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 30px;
+    color: white;
+    max-width: 1200px;
+    margin: auto;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 12px;
+}
+
+.mapa-info .info-col, 
+.mapa-info .mapa-col, 
+.mapa-info .contacto-col {
+    flex: 1;
+    min-width: 250px;
+}
+
+.mapa-info h4 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.mapa-info p {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.mapa-info .logo-info {
+    width: 150px;
+    margin-bottom: 15px;
+}
+
+.redes-sociales a img {
+    width: 30px;
+    margin: 5px;
+    transition: transform 0.2s ease;
+}
+
+.redes-sociales a img:hover {
+    transform: scale(1.2);
+}
+
+.tema-wrapper {
+    text-align: center;
+    width: 300px;
+}
+
+.tema-card {
+    border: 2px dashed #ccc;
+    border-radius: 15px;
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+    background-color: rgba(184, 184, 184, 0.336);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tema-card:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: #1a039b;
+}
+
+.img-tema {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    display: block;
+}
+
+.tema-card.no-img {
+    background-color: #f9f9f9; /* Fondo claro para los que no tienen imagen */
+    justify-content: center;
+    border: 2px dashed #bbb;
+}
+
+.tema-texto {
+    margin-top: 5px;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+}
+
+
+
+.seccion-contacto p {
+    margin: 1px 0; /* Reduce los márgenes verticales */
+    line-height: 1.2; /* Reduce el espacio entre líneas */
+}
+
+
+
+
     </style>
 }
 
@@ -194,12 +286,13 @@
     </p>
 </div>
 
-<!-- CONTACTO DINÁMICO -->
+<!-- CONTACTO -->
 <div class="full-width-section seccion-contacto">
     <h3>Contacto:</h3>
-    <pre style="white-space: pre-wrap; font-family: inherit; background: none; border: none; color: white;">
-@contacto
-    </pre>
+   <div class="contenido-contacto">
+    @Html.Raw(contacto)
+</div>
+
 
     @if (rol == "Administrador")
     {
@@ -207,32 +300,109 @@
     }
 </div>
 
-<!-- TEMAS DE AYUDA DINÁMICOS -->
+<!-- TEMAS DE AYUDA -->
 <div class="full-width-section temas-ayuda">
     <h3>Temas de ayuda</h3>
     <div class="cards-container">
-        @foreach (var tema in temas)
-        {
-            if (!string.IsNullOrWhiteSpace(tema))
-            {
-                <div class="tema-card"><strong>@tema.Trim()</strong></div>
-            }
-        }
+@foreach (var tema in temas)
+{
+    if (!string.IsNullOrWhiteSpace(tema))
+    {
+        var nombreTema = tema.Trim();
+        var nombreArchivo = nombreTema
+            .ToLower()
+            .Replace("á", "a").Replace("é", "e").Replace("í", "i").Replace("ó", "o").Replace("ú", "u")
+            .Replace("ñ", "n").Replace(" ", "_");
+
+        var rutaImagen = $"/img/temas/{nombreArchivo}.jpg"; // puedes usar .png si tus imágenes son .png
+        var rutaPdf = Url.Action("VerPdf", "Contenido", new { nombre = nombreArchivo });
+        <div class="tema-wrapper">
+            <a href="@rutaPdf" class="tema-card" target="_blank" rel="noopener noreferrer" >
+                <img src="@rutaImagen" alt="@nombreTema" class="img-tema" onerror="this.style.display='none';" />
+            </a>
+            <p class="tema-texto">@nombreTema</p>
+        </div>
+    }
+}
+
+
+
     </div>
 
     @if (rol == "Administrador")
     {
         <a href="@Url.Action("Editar", "Contenido", new { clave = "temas" })" class="btn btn-light mt-4">Editar Temas</a>
-
-
     }
+
+    @if (rol == "Administrador")
+{
+   <a href="@Url.Action("SubirPdf", "Contenido")" class="btn btn-light mt-4">Subir PDF</a>
+
+}
+
+@if (rol == "Administrador")
+{
+    <a href="@Url.Action("SubirImagen", "Contenido")" class="btn btn-light mt-4">Subir Imagen</a>
+}
+
+
+</div>
+
+</div>
+
+<!-- LÍNEA DIVISORIA -->
+<!-- LÍNEA DIVISORIA -->
+<hr />
+
+<!-- MAPA DE GOOGLE -->
+<!-- SECCIÓN INFORMACIÓN + MAPA -->
+<div class="mapa-section">
+    <div class="mapa-info">
+        <!-- Columna izquierda -->
+        <div class="info-col">
+            <img src="/img/logoUn.png" alt="Universidad del Norte" class="logo-info" />
+            <p>
+                En la Universidad del Norte hemos asumido el compromiso de fomentar
+                en nuestros estudiantes el desarrollo de habilidades y conocimientos
+                que les permita ser protagonistas de su propio crecimiento.
+            </p>
+        </div>
+
+        <!-- Columna central (Mapa) -->
+        <div class="mapa-col">
+            <h4>Dirección</h4>
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7190.9666358703025!2d-100.3330347239346!3d25.68841701162811!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x866295edae719d1f%3A0x9bc23b8610f94f50!2sUniversidad%20del%20Norte!5e0!3m2!1ses-419!2smx!4v1753082026384!5m2!1ses-419!2smx" 
+                width="100%" height="200" 
+                style="border:0; border-radius:10px; box-shadow: 0 0 10px rgba(0,0,0,0.2);" 
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            <p class="direccion">
+                Av. Venustiano Carranza No. 1350, Centro, 64000 Monterrey, N.L., México
+            </p>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="contacto-col">
+            <h4>Contacto</h4>
+            <p><strong>Teléfono:</strong> (81) 8851-7100</p>
+            <p><strong>Correo:</strong> UN@UN.EDU.MX</p>
+            <p><a href="https://un.edu.mx/wp-content/uploads/2020/09/Aviso-De-Privacidad-UN.pdf" target="_blank" rel="noopener noreferrer">Aviso de privacidad</a></p>
+            <h4>¡Síguenos!</h4>
+            <div class="redes-sociales">
+                <a href="#"><img src="/img/Facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="/img/X.png" alt="X"></a>
+                <a href="#"><img src="/img/linkedin2.png" alt="LinkedIn"></a>
+                <a href="#"><img src="/img/instagram.png" alt="Instagram"></a>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 
-<!-- IMAGEN FINAL -->
-<img src="/img/fondoUn1.png" alt="Centro de ayuda" class="imagen-final" />
-<p style="text-align:center;">Programa una visita en persona a nuestro Centro de Ayuda</p>
+
+
 
 @section Scripts {
     <script>

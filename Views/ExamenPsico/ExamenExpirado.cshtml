@@ -1,0 +1,77 @@
+@{
+    ViewData["Title"] = "Examen Expirado";
+    Layout = "_Layout";
+}
+
+<style>
+    body {
+        background-image: url('/img/fondoUn1.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .expirado-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        padding: 20px;
+    }
+
+    .expirado-container {
+        max-width: 600px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        border: 2px solid #b80000;
+        border-radius: 12px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .expirado-container h2 {
+        font-size: 2rem;
+        color: #b80000;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .expirado-container p {
+        font-size: 1.2rem;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    .btn-reintentar {
+        background-color: #b80000;
+        color: white;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-reintentar:hover {
+        background-color: #930000;
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="expirado-wrapper">
+    <div class="expirado-container">
+        <h2>¡El tiempo del examen ha expirado!</h2>
+        <p>Por favor, vuelve a iniciar el examen para intentarlo nuevamente.</p>
+        <a href="@Url.Action("Iniciar", "ExamenPsico")" class="btn-reintentar">Reintentar Examen</a>
+    </div>
+</div>

@@ -1,6 +1,9 @@
+@inject PortalPsicologia.Data.PsicometricoContext _context
 @{
     ViewData["Title"] = "Atención a Estudiantes";
     Layout = "_Layout";
+    var rol = Context.Session.GetString("UsuarioRol");
+    var contenido = _context.ContenidoEditable.FirstOrDefault(c => c.Clave == "servicio-estudiantes")?.Texto ?? "Información no disponible.";
 }
 
 @section Styles {
@@ -37,7 +40,7 @@
         .card-servicio {
             background-color: white;
             padding: 30px;
-            border-left: 6px solid #003d80; /* azul fuerte */
+            border-left: 6px solid #003d80;
             border-radius: 12px;
             box-shadow: 0 0 18px rgba(0,0,0,0.06);
             max-width: 950px;
@@ -80,22 +83,15 @@
 
 <div class="contenido">
     <div class="card-servicio">
-        <h2>¿A quién está dirigido?</h2>
-        <p>
-            Este servicio está orientado a los alumnos que presentan alguna situación académica que requiera orientación y seguimiento personalizado,
-            ya sea por parte del personal administrativo, docente o del mismo estudiante.
-        </p>
+        @Html.Raw(contenido)
 
-        <h2>¿Qué ofrece?</h2>
-        <ul>
-            <li>Canalización para recibir atención en las distintas áreas de la institución.</li>
-            <li>Orientación para la solución de problemas académicos o personales.</li>
-            <li>Seguimiento de casos para asegurar la atención integral del alumno.</li>
-        </ul>
-
-        <h2>¿Cómo acceder?</h2>
-        <p>
-            El estudiante puede acudir directamente al área de atención o puede ser canalizado por docentes, coordinadores o administrativos de la Universidad.
-        </p>
+        @if (rol == "Administrador")
+        {
+            <div class="mt-3 text-end">
+                <a class="btn btn-sm btn-outline-primary" href="@Url.Action("EditarServicio", "Contenido", new { clave = "servicio-estudiantes" })">
+                    Editar Información
+                </a>
+            </div>
+        }
     </div>
 </div>
