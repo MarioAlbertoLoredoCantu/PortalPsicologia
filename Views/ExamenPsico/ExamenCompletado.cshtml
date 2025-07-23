@@ -4,8 +4,76 @@
     var diagnostico = TempData["Diagnostico"];
 }
 
-<h2>¡Has completado el examen!</h2>
-<p><strong>Puntaje total:</strong> @puntaje</p>
-<p><strong>Diagnóstico:</strong> @diagnostico</p>
+@section Styles {
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f2f5, #e6ebf0);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Regresar al inicio</a>
+        .resultado-container {
+            max-width: 600px;
+            margin: 80px auto;
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            animation: fadeInUp 0.8s ease-in-out;
+        }
+
+        .resultado-container h2 {
+            font-size: 2.2rem;
+            color: #b80000;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .resultado-container p {
+            font-size: 1.2rem;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .resultado-container p strong {
+            color: #000;
+        }
+
+        .btn-volver {
+            background-color: #b80000;
+            color: #fff;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 25px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-volver:hover {
+            background-color: #930000;
+        }
+
+        @@keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+}
+
+<div class="resultado-container">
+    <h2>¡Has completado el examen!</h2>
+    <p><strong>Puntaje total:</strong> @puntaje</p>
+    <p><strong>Diagnóstico:</strong> @diagnostico</p>
+
+    <a asp-controller="Home" asp-action="Index" class="btn-volver">Regresar al inicio</a>
+</div>

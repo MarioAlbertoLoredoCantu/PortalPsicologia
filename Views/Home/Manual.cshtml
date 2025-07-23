@@ -1,11 +1,77 @@
 @{
     ViewData["Title"] = "Manual de Ayuda";
+    Layout = "_Layout";
 }
 
-<h2>Manual de Ayuda</h2>
+@section Styles {
+    <style>
+        .hero-manual {
+            background: url('/img/fondoUn2.png') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            padding: 80px 20px 40px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
 
-<p>Haz clic en el botón para descargar el manual en formato PDF.</p>
+        .hero-manual h1 {
+            font-size: 2.8rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+        }
 
-<a class="btn btn-success" href="~/archivos/Manual.pdf" download>
-    📘 Descargar Manual de Ayuda
-</a>
+        .manual-card {
+            max-width: 700px;
+            margin: -30px auto 40px;
+            background: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .manual-card p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .btn-download {
+            background-color: #0066cc;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background-color: #004a99;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @@keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+}
+
+<div class="hero-manual">
+    <h1>Manual de Ayuda</h1>
+</div>
+
+<div class="manual-card">
+    <p>Haz clic en el botón para descargar el manual en formato PDF.</p>
+
+    <a class="btn-download" href="~/archivos/Manual.pdf" download>
+        📘 Descargar Manual de Ayuda
+    </a>
+</div>

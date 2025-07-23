@@ -85,7 +85,7 @@
 }
 
 <div class="editor-container">
-    <h2>Editar Temas: @Model.Clave</h2>
+    <h2>Editar @Model.Clave: </h2>
 
     <form asp-action="EditarTemas" method="post">
         <input type="hidden" asp-for="Id" />
@@ -98,7 +98,9 @@
                 <input type="text" id="tema@(i + 1)" 
                        name="Lineas[@i]" 
                        value="@(Model.Lineas.Count > i ? Model.Lineas[i] : "")" 
-                       class="form-control" />
+                       class="form-control"
+                       maxlength="30"
+                       placeholder="Máx. 30 caracteres" />
             </div>
         }
 

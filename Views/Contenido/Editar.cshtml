@@ -73,6 +73,13 @@
             gap: 15px;
             margin-top: 20px;
         }
+
+        .char-counter {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
     </style>
 }
 
@@ -86,6 +93,7 @@
         <div class="form-group">
             <label>Contenido</label>
             <textarea id="editor" asp-for="Texto" class="form-control"></textarea>
+            <div class="char-counter" id="charCounter"></div>
         </div>
 
         <div class="btn-group-custom">
@@ -99,22 +107,35 @@
     <!-- TinyMCE -->
     <script src="https://cdn.tiny.cloud/1/caddokn82nsyzvdaawu5mwjd9b5t28kz1tn11h6x95xuopnb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
+        const maxChars = 300; // Límite máximo
+        const counterElement = document.getElementById('charCounter');
+
         tinymce.init({
             selector: '#editor',
             menubar: false,
             plugins: 'lists link advlist textcolor',
-            toolbar: 'undo redo | bold italic underline | forecolor backcolor | fontselect fontsizeselect | bullist numlist | link',
+            toolbar: 'undo redo | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | fontselect fontsizeselect | bullist numlist | link',
             fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt',
-            font_family_formats:
-                'Arial=arial,helvetica,sans-serif;' +
-                'Courier New=courier new,courier,monospace;' +
-                'Georgia=georgia,palatino;' +
-                'Tahoma=tahoma,arial,helvetica,sans-serif;' +
-                'Times New Roman=times new roman,times;' +
-                'Verdana=verdana,geneva;',
             branding: false,
             height: 300,
-            content_style: "p { margin: 2px 0; line-height: 1.2; }"
+            setup: function (editor) {
+                const updateCounter = () => {
+                    const content = editor.getContent({ format: 'text' });
+                    const remaining = maxChars - content.length;
+                    counterElement.textContent = remaining >= 0 ? `${remaining} caracteres restantes` : 'Límite alcanzado';
+
+                    if (remaining < 0) {
+                        // Si pasa el límite, recorta
+                        const trimmed = content.substring(0, maxChars);
+                        editor.setContent(trimmed);
+                    }
+                };
+
+                editor.on('input', updateCounter);
+                editor.on('paste', function (e) {
+                    setTimeout(updateCounter, 0);
+                });
+            }
         });
     </script>
 }

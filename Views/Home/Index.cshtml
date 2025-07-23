@@ -19,6 +19,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        
         }
 
         html, body {
@@ -26,6 +27,9 @@
             height: 100%;
             font-family: 'Segoe UI', sans-serif;
         }
+body {
+    background-color: #4d0202; /* Color del footer o último bloque */
+}
 
         .full-width-section {
             width: 100%;
@@ -33,7 +37,7 @@
 
         .hero-section {
             position: relative;
-            background: url('/img/fondoUn1.png') no-repeat center center;
+            background: url('/img/fondoUn2.png') no-repeat center center;
             background-size: cover;
             background-attachment: fixed;
             color: white;
@@ -95,10 +99,21 @@
             padding-bottom: 10px;
         }
 
-        .temas-ayuda {
-            padding: 50px 20px;
-            text-align: center;
-        }
+     .temas-ayuda {
+    padding: 50px 20px;
+    text-align: center;
+    background: url('/img/fondoUn3.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+     /* Bordes redondeados */
+    overflow: hidden; /* Asegura que la imagen respete el border-radius */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4); /* Sombra para resaltar */
+}
+
+
+
+
 
         .temas-ayuda h3 {
             font-size: 1.8rem;
@@ -129,12 +144,12 @@ hr {
             background-size: cover;
             background-attachment: fixed;
             color: white;
-            height: 65vh;
+            height: 50vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding-left: 5%;
-            animation: fadeIn 2s ease-in;
+           
 }
 
 
@@ -148,13 +163,15 @@ hr {
 }
 
 hr {
-    border: 0;
-    height: 11px;
-    background: linear-gradient(to right, #c50202, #c50202) center/80% 8px no-repeat,
-                linear-gradient(to right, #8d2d2d, #8b2424) center/80% 1px no-repeat;
-    margin: 100px auto 0 auto;
+    border: none;
+    height: 50px;
+    background-color: #ff1818; /* Rojo sólido */
+    margin: 0;
     width: 100%;
+    padding: 0;
 }
+
+
 
 .mapa-info {
     display: flex;
@@ -209,12 +226,12 @@ hr {
 }
 
 .tema-card {
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
     border: 2px dashed #ccc;
     border-radius: 15px;
     width: 300px;
     height: 200px;
     overflow: hidden;
-    background-color: rgba(184, 184, 184, 0.336);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-decoration: none;
     margin-bottom: 10px;
@@ -223,6 +240,7 @@ hr {
     justify-content: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 
 .tema-card:hover {
     transform: translateY(-5px) scale(1.03);
@@ -247,9 +265,14 @@ hr {
 .tema-texto {
     margin-top: 5px;
     font-weight: bold;
-    color: #000;
-    text-align: center;
+    color: #fff; /* Texto en blanco para resaltar */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Sombra para más contraste */
+    background: rgba(0,0,0,0.3); /* Fondo oscuro semi-transparente */
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 5px;
 }
+
 
 
 
@@ -348,7 +371,6 @@ hr {
 
 </div>
 
-</div>
 
 <!-- LÍNEA DIVISORIA -->
 <!-- LÍNEA DIVISORIA -->
@@ -380,7 +402,7 @@ hr {
             <p class="direccion">
                 Av. Venustiano Carranza No. 1350, Centro, 64000 Monterrey, N.L., México
             </p>
-        </div>
+        </div>  
 
         <!-- Columna derecha -->
         <div class="contacto-col">

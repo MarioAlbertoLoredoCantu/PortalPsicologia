@@ -73,6 +73,13 @@
             gap: 15px;
             margin-top: 20px;
         }
+
+        .char-counter {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
     </style>
 }
 
@@ -86,6 +93,7 @@
         <div class="form-group">
             <label>Contenido</label>
             <textarea id="editor" asp-for="Texto" class="form-control"></textarea>
+            <div class="char-counter" id="charCounter"></div>
         </div>
 
         <div class="btn-group-custom">
@@ -107,23 +115,48 @@
 @section Scripts {
     <script src="https://cdn.tiny.cloud/1/caddokn82nsyzvdaawu5mwjd9b5t28kz1tn11h6x95xuopnb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
+        const maxCharacters = 1000; // Límite de caracteres
+
         tinymce.init({
             selector: '#editor',
             menubar: false,
             plugins: 'lists link advlist textcolor',
-            toolbar: 'undo redo | bold italic underline | forecolor backcolor | fontselect fontsizeselect | bullist numlist | link',
+            toolbar: 'undo redo | bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | fontselect fontsizeselect | bullist numlist | link',
             fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt',
             branding: false,
             height: 300,
-            font_family_formats:
-                'Arial=arial,helvetica,sans-serif;' +
-                'Courier New=courier new,courier,monospace;' +
-                'Georgia=georgia,palatino;' +
-                'Tahoma=tahoma,arial,helvetica,sans-serif;' +
-                'Times New Roman=times new roman,times;' +
-                'Verdana=verdana,geneva;',
+    
+            setup: function (editor) {
+                // Mostrar caracteres restantes
+                editor.on('input', function () {
+                    const content = editor.getContent({ format: 'text' });
+                    const remaining = maxCharacters - content.length;
+                    document.getElementById('charCount').textContent = 
+                        (remaining >= 0 ? remaining : 0) + ' caracteres restantes';
+
+                    // Bloquear más texto al exceder
+                    if (content.length > maxCharacters) {
+                        editor.undoManager.undo(); // Revertir el último cambio
+                    }
+                });
+
+                // Prevenir texto pegado más largo
+                editor.on('paste', function (e) {
+                    const content = editor.getContent({ format: 'text' });
+                    const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+
+                    if (content.length + pastedText.length > maxCharacters) {
+                        e.preventDefault();
+                        const allowedText = pastedText.substring(0, maxCharacters - content.length);
+                        editor.insertContent(allowedText);
+                    }
+                });
+                
+            }
         });
     </script>
+}
+
 }
 
 

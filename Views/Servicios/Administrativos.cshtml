@@ -9,7 +9,7 @@
 @section Styles {
     <style>
         .hero-admin {
-            background: url('/img/fondoUn1.png') no-repeat center center fixed;
+            background: url('/img/fondoUn3.png') no-repeat center center fixed;
             background-size: cover;
             color: white;
             padding: 100px 20px 60px;
@@ -28,16 +28,22 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
-        .card-contenido {
-            max-width: 1000px;
-            margin: 30px auto 60px;
-            background: white;
-            padding: 40px 50px;
-            border-radius: 14px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            border-left: 6px solid #aa048e;
-            animation: fadeInUp 1s ease-in-out;
-        }
+       .card-contenido {
+    max-width: 1000px;
+    margin: 30px auto 60px;
+    background: white;
+    padding: 40px 50px;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    border-left: 6px solid #aa048e;
+    animation: fadeInUp 1s ease-in-out;
+
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-line; /* Mantiene saltos de línea, pero compacta el texto */
+    line-height: 1.1;      /* Ajusta el espacio entre líneas */
+}
+
 
         .card-contenido h2 {
             font-size: 1.8rem;
@@ -59,6 +65,10 @@
         .card-contenido li {
             margin-bottom: 8px;
         }
+.card-contenido .mt-3 {
+    white-space: normal; /* Restaura comportamiento normal */
+    text-align: right;   /* Asegura alineación */
+}
 
         .contact-info {
             margin-top: 30px;

@@ -5,33 +5,53 @@
 }
 
 <style>
+    body {
+        background-image: url('/img/fondoUn1.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-  body {
-    background-image: url('/img/fondoUn1.png'); /* cambia a tu ruta */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
-    
+    .titulo-principal {
+        text-align: center;
+        padding: 40px 20px 20px;
+        background: rgba(240, 43, 43, 0.527);
+        color: white;
+        font-size: 2.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-bottom: 4px solid #930000;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transform: translateY(-50px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .titulo-principal.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Clase sin animación (para las siguientes preguntas) */
+    .titulo-principal.no-animacion {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        transition: none !important;
+    }
+
     .examen-container {
         max-width: 650px;
-        margin: 50px auto;
+        margin: 40px auto;
         background-color: rgba(255, 255, 255, 0.95);
         border: 2px solid #b80000;
         border-radius: 12px;
         padding: 40px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
-
-.pregunta-texto {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-    max-width: 100%;
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-}
-
 
     .examen-header {
         margin-bottom: 30px;
@@ -45,9 +65,11 @@
     }
 
     .pregunta-texto {
+        word-wrap: break-word;
+        white-space: normal;
         font-size: 1.4rem;
-        margin-bottom: 25px;
         text-align: center;
+        margin-bottom: 25px;
         color: #333;
     }
 
@@ -68,7 +90,7 @@
         border: none;
         border-radius: 8px;
         cursor: pointer;
-        margin-top: 20px;
+        transition: background 0.3s ease;
     }
 
     .btn-siguiente:hover {
@@ -83,6 +105,13 @@
     }
 </style>
 
+
+<!-- Título principal -->
+<div class="titulo-principal" id="tituloPrincipal">
+    Examen Psicométrico
+</div>
+
+<!-- Contenedor del examen -->
 <div class="examen-container">
     <div class="examen-header">
         <h2>Pregunta @(Model.Indice + 1) de @Model.TotalPreguntas</h2>
@@ -92,7 +121,7 @@
         <input type="hidden" asp-for="Indice" />
 
         <div class="pregunta-texto">
-            <p class="pregunta-texto">@Model.PreguntaActual.Texto</p>
+            <p>@Model.PreguntaActual.Texto</p>
         </div>
 
         <div class="form-check">
@@ -117,23 +146,37 @@
         </div>
     </form>
 
-  <div class="tiempo-restante">
-    Tiempo restante: <span id="contador"></span>
+    <div class="tiempo-restante">
+        Tiempo restante: <span id="contador"></span>
+    </div>
 </div>
 
 @section Scripts {
     <script>
-        let tiempo = @Model.TiempoRestante; // Tiempo en segundos
+        // Mostrar animación del título solo la primera vez
+        window.addEventListener("load", function () {
+            const titulo = document.getElementById("tituloPrincipal");
+
+            if (!sessionStorage.getItem("examenAnimado")) {
+                // Primera vez: animar
+                titulo.classList.add("visible");
+                sessionStorage.setItem("examenAnimado", "true");
+            } else {
+                // Siguientes veces: sin animación
+                titulo.classList.add("no-animacion");
+            }
+        });
+
+        // Lógica del contador
+        let tiempo = @Model.TiempoRestante;
         const contadorElemento = document.getElementById('contador');
 
-        // Función para formatear en mm:ss
         function formatTime(seconds) {
             const minutos = Math.floor(seconds / 60);
             const segundos = seconds % 60;
             return `${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
         }
 
-        // Inicializar el contador
         contadorElemento.textContent = formatTime(tiempo);
 
         const interval = setInterval(() => {
@@ -147,5 +190,4 @@
         }, 1000);
     </script>
 }
-
 

@@ -16,7 +16,7 @@ public class ExamenPsicoController : Controller
     private const string SessionKeyRespuestas = "Respuestas";
 
     private const string SessionKeyInicioExamen = "InicioExamen";
-    private const int TiempoMaximoSegundos = 10; // 15 minutos
+    private const int TiempoMaximoSegundos = 900; // 15 minutos
 
     public ExamenPsicoController(PsicometricoContext context)
     {

@@ -17,7 +17,7 @@
         }
 
         .seccion-fondo {
-            background: url('/img/fondoUn1.png') no-repeat center center fixed;
+            background: url('/img/fondoUn4.png') no-repeat center center fixed;
             background-size: cover;
             min-height: 10vh;
             display: flex;
@@ -50,15 +50,20 @@
         }
 
         .contenedor-card {
-            max-width: 1000px;
-            margin: 30px auto 60px;
-            background: white;
-            padding: 30px 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-left: 6px solid #7e1fff;
-            animation: fadeIn 1s ease;
-        }
+    max-width: 1000px;
+    margin: 30px auto 60px;
+    background: white;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-left: 6px solid #7e1fff;
+    animation: fadeIn 1s ease;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-line; /* Cambiado */
+    line-height: 1.18;       /* Mejora la legibilidad */
+}
+
 
         .contenedor-card h2 {
             color: #333;
@@ -79,6 +84,11 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .contenedor-card .mt-3 {
+    white-space:normal; /* Restaura comportamiento normal */
+    text-align: right;   /* Asegura alineación */
+}
+
     </style>
 }
 
